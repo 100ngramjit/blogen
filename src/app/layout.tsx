@@ -20,12 +20,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Theme
-          accentColor="mint"
+          accentColor="lime"
           grayColor="gray"
-          panelBackground="solid"
+          panelBackground="translucent"
           scaling="100%"
           radius="medium"
-          appearance="dark"
+          appearance="light"
         >
           {children}
         </Theme>
