@@ -2,7 +2,7 @@ import { Button } from "@radix-ui/themes";
 
 const Navbar = () => {
   return (
-    <div className="flex items-center justify-between flex-wrap p-3 bg-primary">
+    <div className="flex items-center justify-between flex-wrap p-3">
       <div className="flex items-center flex-shrink-0 mr-6">
         <span className="font-semibold text-xl tracking-tight">Blogs</span>
       </div>
@@ -21,8 +21,10 @@ const Navbar = () => {
             Blog
           </a>
         </div>
-        <Button variant="outline">Download</Button>
       </div>
+      <Button variant="outline" color="ruby">
+        Logout
+      </Button>
     </div>
   );
 };
