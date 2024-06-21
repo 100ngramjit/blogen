@@ -15,7 +15,6 @@ app.post("/api/v1/signup", async (c) => {
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
   const body = await c.req.json();
-  console.log(body);
   try {
     const user = await prisma.user.create({
       data: {
@@ -34,7 +33,6 @@ app.post("/api/v1/signup", async (c) => {
     );
     return c.json({ token: jwtResponse });
   } catch (e) {
-    console.log("caught", e);
     c.status(403);
     return c.json({ err: e });
   }
@@ -52,17 +50,20 @@ app.post("/api/v1/signin", async (c) => {
         password: body.password,
       },
     });
-    const jwtResponse = await sign(
-      {
-        user: {
-          email: body.email,
+    if (user) {
+      const jwtResponse = await sign(
+        {
+          user: {
+            email: body.email,
+            id: user?.id,
+          },
         },
-      },
-      c.env.JWT_SECRET
-    );
-    return c.json({ token: jwtResponse });
+        c.env.JWT_SECRET
+      );
+      return c.json({ token: jwtResponse });
+    }
+    return c.json({ msg: "This email doesnt exist" });
   } catch (e) {
-    console.log("caught", e);
     c.status(403);
     return c.json({ err: e });
   }
