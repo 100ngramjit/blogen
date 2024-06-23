@@ -1,8 +1,8 @@
-import { Button } from "@radix-ui/themes";
+import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   return (
-    <div className="flex items-center justify-between flex-wrap p-3">
+    <header className="px-4 lg:px-5 py-2 flex items-center justify-between rounded-b-3xl bg-gradient-to-r from-[#6366F1] to-[#9333EA] text-white fixed w-full">
       <div className="flex items-center flex-shrink-0 mr-6">
         <span className="font-semibold text-xl tracking-tight">Blogs</span>
       </div>
@@ -22,10 +22,10 @@ const Navbar = () => {
           </a>
         </div>
       </div>
-      <Button variant="outline" color="ruby">
+      <Button variant="destructive" className="bg-dark">
         Logout
       </Button>
-    </div>
+    </header>
   );
 };
 export default Navbar;

@@ -11,8 +11,8 @@ import {
 
 const page = () => {
   return (
-    <>
-      <Flex direction="column" gap="5" className="mt-10">
+    <div className="pt-20">
+      <Flex direction="column" gap="5" className="">
         <Text size="1" align="center">
           Quick glance
         </Text>
@@ -127,7 +127,7 @@ const page = () => {
           </Box>
         </Grid>
       </Flex>
-    </>
+    </div>
   );
 };
 export default page;
