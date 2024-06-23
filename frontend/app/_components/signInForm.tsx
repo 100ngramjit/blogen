@@ -1,9 +1,22 @@
+// "use client";
+import React, { useState } from "react";
 import Link from "next/link";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-export default function SignInForm() {
+export default function SignInForm({ handleSubmit }: any) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+
   return (
     <div className="mx-auto flex max-w-md flex-col items-center justify-center px-4 py-12 m-2 rounded border-2 border-black shadow-2xl">
       <div className="w-full space-y-6">
@@ -22,7 +35,10 @@ export default function SignInForm() {
             </Link>
           </p>
         </div>
-        <form className="space-y-6">
+        <form
+          className="space-y-6"
+          onSubmit={(e) => handleSubmit(e, email, password)}
+        >
           <div>
             <Label htmlFor="email" className="my-2">
               Email address
@@ -33,6 +49,8 @@ export default function SignInForm() {
               autoComplete="email"
               required
               placeholder="name@example.com"
+              value={email}
+              onChange={handleEmailChange}
             />
           </div>
           <div>
@@ -54,6 +72,8 @@ export default function SignInForm() {
               autoComplete="current-password"
               required
               placeholder="Enter your password"
+              value={password}
+              onChange={handlePasswordChange}
             />
           </div>
           <Button type="submit" className="w-full">
