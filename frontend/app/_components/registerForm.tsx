@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 export default function RegisterForm() {
   return (
-    <div className="mx-auto flex max-w-md flex-col items-center justify-center px-4 py-12 m-2 rounded border-2	border-black shadow-2xl ">
+    <div className="mx-auto flex max-w-md flex-col items-center justify-center px-4 py-12 m-2 rounded border-2	border-black shadow-2xl shadow-black">
       <div className="w-full space-y-6">
         <div className="text-center">
           <h2 className="text-3xl font-bold tracking-tight">

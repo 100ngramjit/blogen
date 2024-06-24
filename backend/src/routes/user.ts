@@ -53,7 +53,7 @@ userRouter.post("/signin", async (c) => {
       );
       return c.json({ token: jwtResponse });
     }
-    return c.json({ msg: "This email doesnt exist" });
+    return c.json({ msg: "The email or password provided is wrong" });
   } catch (e) {
     c.status(403);
     return c.json({ err: e });

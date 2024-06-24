@@ -3,8 +3,9 @@ import { userRouter } from "./routes/user";
 import { articleRouter } from "./routes/articles";
 import { envVars } from "./types";
 import { cors } from "hono/cors";
-// Create the main Hono app
+
 const app = new Hono<envVars>();
+app.use("/*", cors());
 
 app.route("/api/article", articleRouter);
 app.route("/api/user", userRouter);
@@ -16,19 +17,4 @@ app.notFound((c) => {
   });
 });
 
-app.use(
-  "*",
-  cors({
-    origin: "http://localhost:3000",
-    allowHeaders: ["Content-Type", "Authorization"],
-    allowMethods: ["POST", "GET", "OPTIONS", "PUT", "DELETE"],
-    exposeHeaders: ["Content-Length"],
-    maxAge: 600,
-    credentials: true,
-  })
-);
-
-app.options("*", (c) => {
-  return c.text("", 204);
-});
 export default app;
