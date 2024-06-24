@@ -27,7 +27,6 @@ export default function page() {
         method: "POST",
         data: bodyContent,
       };
-      console.log("triggered");
       let response = await axios.request(reqOptions);
       console.log(response.data);
       if (response.data.token) {

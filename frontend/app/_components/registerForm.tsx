@@ -1,9 +1,35 @@
+"use client";
+
+import React, { useState } from "react";
 import Link from "next/link";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-export default function RegisterForm() {
+export default function RegisterForm({ handleSubmit }: any) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+
+  const handleConfirmPasswordChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setConfirmPassword(e.target.value);
+  };
+
   return (
     <div className="mx-auto flex max-w-md flex-col items-center justify-center px-4 py-12 m-2 rounded border-2	border-black shadow-2xl shadow-black">
       <div className="w-full space-y-6">
@@ -22,7 +48,12 @@ export default function RegisterForm() {
             </Link>
           </p>
         </div>
-        <form className="space-y-6">
+        <form
+          className="space-y-6"
+          onSubmit={(e) =>
+            handleSubmit(e, email, password, confirmPassword, name)
+          }
+        >
           <div>
             <Label htmlFor="name" className="my-2">
               Name
@@ -33,6 +64,8 @@ export default function RegisterForm() {
               autoComplete="name"
               required
               placeholder="Enter your name"
+              value={name}
+              onChange={handleNameChange}
             />
           </div>
           <div>
@@ -45,6 +78,8 @@ export default function RegisterForm() {
               autoComplete="email"
               required
               placeholder="name@example.com"
+              value={email}
+              onChange={handleEmailChange}
             />
           </div>
           <div>
@@ -59,6 +94,8 @@ export default function RegisterForm() {
               autoComplete="new-password"
               required
               placeholder="Enter a password"
+              value={password}
+              onChange={handlePasswordChange}
             />
           </div>
           <div>
@@ -73,6 +110,8 @@ export default function RegisterForm() {
               autoComplete="new-password"
               required
               placeholder="Confirm your password"
+              value={confirmPassword}
+              onChange={handleConfirmPasswordChange}
             />
           </div>
           <Button type="submit" className="w-full">
