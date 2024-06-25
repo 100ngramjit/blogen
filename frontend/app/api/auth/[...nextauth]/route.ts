@@ -22,12 +22,11 @@ const handler = NextAuth({
           }
         );
         const user = await res.json();
-        console.log(user);
-        // If no error and we have user data, return it
+        const token = user.token;
+        console.log("user", user.token);
         if (res.ok && user.token) {
-          return user;
+          return { id: token };
         }
-        // Return null if user data could not be retrieved
         return null;
       },
     }),
@@ -39,5 +38,3 @@ const handler = NextAuth({
 });
 export const GET = handler;
 export const POST = handler;
-
-//TODO : add handler to custom route file , add signIn function instead of API call to sign in and register pages.

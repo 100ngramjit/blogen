@@ -27,7 +27,7 @@ export default function SignInForm({ handleSubmit }: any) {
           <p className="mt-2 text-sm text-muted-foreground">
             Don't have an account?{" "}
             <Link
-              href="#"
+              href="/register"
               className="font-medium text-primary hover:underline"
               prefetch={false}
             >
@@ -58,13 +58,6 @@ export default function SignInForm({ handleSubmit }: any) {
               <Label htmlFor="password" className="my-1">
                 Password
               </Label>
-              <Link
-                href="#"
-                className="text-sm font-medium text-primary hover:underline"
-                prefetch={false}
-              >
-                Forgot password?
-              </Link>
             </div>
             <Input
               id="password"

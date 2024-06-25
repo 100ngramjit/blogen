@@ -22,7 +22,6 @@ export default function page() {
         password: password,
         redirect: false,
       });
-      console.log("response", response);
 
       if (response?.ok) {
         toast({
