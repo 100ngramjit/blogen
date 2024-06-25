@@ -1,17 +1,14 @@
 "use client";
-import { useRouter } from "next/navigation";
 import Navbar from "../_components/navbar";
+import { signOut } from "next-auth/react";
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const router = useRouter();
-  const handleLogout = () => {
-    // sessionStorage.removeItem("authToken");
-    // router.refresh();
-    router.push("/");
+  const handleLogout = async () => {
+    await signOut();
   };
   return (
     <div>

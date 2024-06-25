@@ -1,9 +1,9 @@
 "use client";
 import { FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 import SignInForm from "../_components/signInForm";
 import { useToast } from "@/components/ui/use-toast";
+import { signIn } from "next-auth/react";
 
 export default function page() {
   const router = useRouter();
@@ -17,20 +17,14 @@ export default function page() {
     event.preventDefault();
 
     try {
-      let bodyContent = JSON.stringify({
-        email: email,
+      const response = await signIn("credentials", {
+        username: email,
         password: password,
+        redirect: false,
       });
+      console.log("response", response);
 
-      let reqOptions = {
-        url: "https://my-app.blogen.workers.dev/api/user/signin",
-        method: "POST",
-        data: bodyContent,
-      };
-      let response = await axios.request(reqOptions);
-      console.log(response.data);
-      if (response.data.token) {
-        //sessionStorage.setItem("authToken", response.data.token);
+      if (response?.ok) {
         toast({
           title: "Sign in success!",
         });
@@ -39,7 +33,7 @@ export default function page() {
       } else {
         toast({
           title: "Error!",
-          description: response.data.msg,
+          description: JSON.stringify(response),
           variant: "destructive",
         });
       }
@@ -53,4 +47,3 @@ export default function page() {
 }
 
 //TODO : Store the token recieved on sign in
-//TODO : Authentication using next : https://nextjs.org/docs/pages/building-your-application/authentication
