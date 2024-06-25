@@ -40,7 +40,7 @@ export default function RegisterForm({ handleSubmit }: any) {
           <p className="mt-2 text-sm text-muted-foreground">
             Already have an account?{" "}
             <Link
-              href="#"
+              href="/signin"
               className="font-medium text-primary hover:underline"
               prefetch={false}
             >

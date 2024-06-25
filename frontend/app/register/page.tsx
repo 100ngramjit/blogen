@@ -37,12 +37,12 @@ export default function page() {
       };
       let response = await axios.request(reqOptions);
       if (response.data.token) {
-        // sessionStorage.setItem("authToken", response.data.token);
         toast({
           title: "Sign up success!",
+          description: "Sign in with your register credentials now!",
         });
         router.refresh();
-        router.push("/feed");
+        router.push("/signin");
       } else {
         toast({
           title: "Error!",
