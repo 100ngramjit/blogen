@@ -30,6 +30,7 @@ export default function page() {
       let response = await axios.request(reqOptions);
       console.log(response.data);
       if (response.data.token) {
+        //sessionStorage.setItem("authToken", response.data.token);
         toast({
           title: "Sign in success!",
         });
@@ -51,6 +52,5 @@ export default function page() {
   return <SignInForm handleSubmit={handleSubmit} />;
 }
 
-//TODO : Fix CORS error in signin ,
 //TODO : Store the token recieved on sign in
 //TODO : Authentication using next : https://nextjs.org/docs/pages/building-your-application/authentication

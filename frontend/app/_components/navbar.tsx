@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 
-const Navbar = () => {
+const Navbar = ({ handleLogout }: any) => {
   return (
     <header className="px-4 lg:px-5 py-2 flex items-center justify-between rounded-b-3xl bg-gradient-to-r from-[#6366F1] to-[#9333EA] text-white fixed w-full">
       <div className="flex items-center flex-shrink-0 mr-6">
@@ -22,7 +22,7 @@ const Navbar = () => {
           </a>
         </div>
       </div>
-      <Button variant="destructive" className="bg-dark">
+      <Button variant="destructive" className="bg-dark" onClick={handleLogout}>
         Logout
       </Button>
     </header>

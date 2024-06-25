@@ -37,6 +37,7 @@ export default function page() {
       };
       let response = await axios.request(reqOptions);
       if (response.data.token) {
+        // sessionStorage.setItem("authToken", response.data.token);
         toast({
           title: "Sign up success!",
         });
