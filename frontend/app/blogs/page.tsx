@@ -116,10 +116,10 @@ const Page = async () => {
           <CardContent>
             <p className="text-muted-foreground line-clamp-3">
               In a world that often demands our constant attention and
-              productivity, it's crucial to prioritize self-care. This blog post
-              explores the transformative power of self-care practices and how
-              they can help us maintain our physical, mental, and emotional
-              well-being in the face of life's challenges.
+              productivity, it&apos;s crucial to prioritize self-care. This blog
+              post explores the transformative power of self-care practices and
+              how they can help us maintain our physical, mental, and emotional
+              well-being in the face of life&apos;s challenges.
             </p>
           </CardContent>
         </Card>

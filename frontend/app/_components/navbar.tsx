@@ -8,7 +8,7 @@ const Navbar = ({ handleLogout }: any) => {
     <header className="bg-violet-600 text-white rounded-b-3xl bg-gradient-to-r from-[#6366F1] to-[#9333EA] text-white fixed w-full">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
         <Link
-          href="#"
+          href="/blogs"
           className="flex items-center gap-2 text-lg font-bold"
           prefetch={false}
         >
