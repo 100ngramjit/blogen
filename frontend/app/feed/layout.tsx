@@ -10,7 +10,7 @@ export default function RootLayout({
 }) {
   const { toast } = useToast();
   const handleLogout = async () => {
-    await signOut();
+    await signOut({ callbackUrl: "/" });
     toast({
       title: "Signed Out!",
       variant: "destructive",
