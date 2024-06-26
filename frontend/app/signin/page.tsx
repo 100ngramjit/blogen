@@ -5,7 +5,7 @@ import SignInForm from "../_components/signInForm";
 import { useToast } from "@/components/ui/use-toast";
 import { signIn } from "next-auth/react";
 
-export default function page() {
+export default function Page() {
   const router = useRouter();
   const { toast } = useToast();
 

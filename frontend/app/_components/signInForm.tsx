@@ -25,7 +25,7 @@ export default function SignInForm({ handleSubmit }: any) {
             Sign in to your account
           </h2>
           <p className="mt-2 text-sm text-muted-foreground">
-            Don't have an account?{" "}
+            <span>Don&apos;t have an account?</span>
             <Link
               href="/register"
               className="font-medium text-primary hover:underline"

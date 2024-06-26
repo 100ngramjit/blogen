@@ -4,7 +4,7 @@ import RegisterForm from "../_components/registerForm";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-export default function page() {
+export default function Page() {
   const router = useRouter();
   const { toast } = useToast();
 
