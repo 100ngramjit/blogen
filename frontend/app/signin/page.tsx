@@ -43,5 +43,3 @@ export default function Page() {
   }
   return <SignInForm handleSubmit={handleSubmit} />;
 }
-
-//TODO : Store the token recieved on sign in

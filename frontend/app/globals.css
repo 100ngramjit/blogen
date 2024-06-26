@@ -57,3 +57,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+#menu-toggle:checked ~ .menu-content {
+  transform: translateX(0);
+}
+
+@media (min-width: 1024px) {
+  .menu-content {
+    transform: translateX(0) !important;
+  }
+}
