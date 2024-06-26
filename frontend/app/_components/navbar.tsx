@@ -83,7 +83,7 @@ const Links = ({ handleLogout }: any) => {
   return (
     <>
       <Link
-        href="/feed
+        href="/blogs
     "
         className="hover:text-violet-200"
         prefetch={false}
@@ -91,7 +91,11 @@ const Links = ({ handleLogout }: any) => {
         Home
       </Link>
 
-      <Link href="/create" className="hover:text-violet-200" prefetch={false}>
+      <Link
+        href="/blogs/create"
+        className="hover:text-violet-200"
+        prefetch={false}
+      >
         Create
       </Link>
       <Button

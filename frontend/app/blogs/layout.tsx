@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <div>
       <Navbar handleLogout={handleLogout} />
-      {children}
+      <main className="pt-20">{children}</main>
     </div>
   );
 }

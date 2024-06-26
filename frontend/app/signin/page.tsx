@@ -27,7 +27,7 @@ export default function Page() {
         toast({
           title: "Sign in success!",
         });
-        router.push("/feed");
+        router.push("/blogs");
       } else {
         toast({
           title: "Error!",

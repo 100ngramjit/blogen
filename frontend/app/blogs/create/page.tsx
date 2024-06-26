@@ -1,19 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
 const Page = () => {
   return (
     <main className="flex-1">
-      <section className="flex min-h-[calc(100dvh-80px)] items-center justify-center bg-background px-4 py-12 md:px-6">
+      <section className="flex min-h-[calc(100dvh-80px)] items-center justify-center bg-background px-4 py-4 md:px-6">
         <div className="container mx-auto max-w-md space-y-6 text-center">
           <div className="space-y-2">
             <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
@@ -35,20 +28,6 @@ const Page = () => {
                 placeholder="Write your blog post here..."
                 className="min-h-[300px]"
               />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="category">Category</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select a category" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="technology">Technology</SelectItem>
-                  <SelectItem value="lifestyle">Lifestyle</SelectItem>
-                  <SelectItem value="travel">Travel</SelectItem>
-                  <SelectItem value="food">Food</SelectItem>
-                </SelectContent>
-              </Select>
             </div>
             <Button
               type="submit"
