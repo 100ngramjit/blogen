@@ -5,8 +5,9 @@ import Link from "next/link";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { LoaderButton } from "@/components/ui/loader-button";
 
-export default function RegisterForm({ handleSubmit }: any) {
+export default function RegisterForm({ handleSubmit, isLoading }: any) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -115,9 +116,9 @@ export default function RegisterForm({ handleSubmit }: any) {
                 onChange={handleConfirmPasswordChange}
               />
             </div>
-            <Button type="submit" className="w-full">
+            <LoaderButton type="submit" isLoading={isLoading}>
               Register
-            </Button>
+            </LoaderButton>
           </form>
         </div>
       </div>

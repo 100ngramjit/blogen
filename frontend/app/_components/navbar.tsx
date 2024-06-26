@@ -109,5 +109,4 @@ const Links = ({ handleLogout }: any) => {
   );
 };
 
-//TODO: add navbar globally
 //TODO: Add loading state to sign in and sign up buttons

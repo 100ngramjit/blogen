@@ -3,8 +3,11 @@ import { useToast } from "@/components/ui/use-toast";
 import RegisterForm from "../_components/registerForm";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Page() {
+  const [isLoading, setIsLoading] = useState(false);
+
   const router = useRouter();
   const { toast } = useToast();
 
@@ -24,6 +27,8 @@ export default function Page() {
     }
 
     try {
+      setIsLoading(true);
+
       let bodyContent = JSON.stringify({
         email: email,
         password: password,
@@ -41,6 +46,8 @@ export default function Page() {
           title: "Sign up success!",
           description: "Sign in with your register credentials now!",
         });
+        setIsLoading(false);
+
         router.push("/signin");
       } else {
         toast({
@@ -48,9 +55,12 @@ export default function Page() {
           description: JSON.stringify(response.data),
           variant: "destructive",
         });
+        setIsLoading(false);
       }
     } catch (e: any) {
       if (e.response.data.err.code === "P2002") {
+        setIsLoading(false);
+
         return toast({
           title: "Email already exists",
           description: "use a different email to signup",
@@ -63,5 +73,5 @@ export default function Page() {
     }
   }
 
-  return <RegisterForm handleSubmit={handleSubmit} />;
+  return <RegisterForm handleSubmit={handleSubmit} isLoading={isLoading} />;
 }

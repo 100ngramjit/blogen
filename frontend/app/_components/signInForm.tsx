@@ -4,8 +4,9 @@ import Link from "next/link";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { LoaderButton } from "@/components/ui/loader-button";
 
-export default function SignInForm({ handleSubmit }: any) {
+export default function SignInForm({ handleSubmit, isLoading }: any) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -70,9 +71,9 @@ export default function SignInForm({ handleSubmit }: any) {
                 onChange={handlePasswordChange}
               />
             </div>
-            <Button type="submit" className="w-full">
+            <LoaderButton type="submit" isLoading={isLoading}>
               Sign in
-            </Button>
+            </LoaderButton>
           </form>
         </div>
       </div>
