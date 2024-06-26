@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Noto_Sans } from "next/font/google";
+import { Karla } from "next/font/google";
 import "./globals.css";
 import { Theme } from "@radix-ui/themes";
 import { Toaster } from "@/components/ui/toaster";
 import { Providers } from "./providers";
 
-const inter = Noto_Sans({ subsets: ["latin"] });
+const inter = Karla({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Blogen",

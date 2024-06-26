@@ -38,10 +38,10 @@ export default function RegisterForm({ handleSubmit }: any) {
             Register for an account
           </h2>
           <p className="mt-2 text-sm text-muted-foreground">
-            Already have an account?{" "}
+            Already have an account?
             <Link
               href="/signin"
-              className="font-medium text-primary hover:underline"
+              className="px-1 font-medium text-primary hover:underline"
               prefetch={false}
             >
               Sign in

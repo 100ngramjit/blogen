@@ -12,7 +12,7 @@ export default function Home() {
       <div className="container mx-auto max-w-md space-y-6 text-center">
         <div className="space-y-2">
           <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
-            Blogen
+            Blogen .
           </h1>
           <p className="text-muted-foreground md:text-xl">
             A minimalist blog for the modern reader.

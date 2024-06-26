@@ -18,7 +18,7 @@ export default function SignInForm({ handleSubmit }: any) {
   };
 
   return (
-    <div className="mx-auto flex max-w-md flex-col items-center justify-center px-4 py-12 m-2 rounded border-2 border-black shadow-2xl shadow-black">
+    <div className="mx-auto flex max-w-md flex-col items-center justify-center px-4 py-12 m-2 rounded shadow-2xl shadow-black">
       <div className="w-full space-y-6">
         <div className="text-center">
           <h2 className="text-3xl font-bold tracking-tight">
@@ -28,7 +28,7 @@ export default function SignInForm({ handleSubmit }: any) {
             <span>Don&apos;t have an account?</span>
             <Link
               href="/register"
-              className="font-medium text-primary hover:underline"
+              className="px-1 font-medium text-primary hover:underline"
               prefetch={false}
             >
               Register

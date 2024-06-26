@@ -56,7 +56,7 @@ const Page = async () => {
               <img
                 src="https://images.unsplash.com/photo-1617050318658-a9a3175e34cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
                 alt="Bold typography"
-                className="w-full h-[100px] object-cover"
+                className="w-full h-[100px] object-cover rounded-t-lg"
               />
               <CardHeader>
                 <CardTitle className="text-md">This is the title</CardTitle>
@@ -76,4 +76,4 @@ const Page = async () => {
 };
 
 export default Page;
-//TODO : Create Article Route
+//TODO : integrate create post API
