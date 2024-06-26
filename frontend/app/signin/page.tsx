@@ -27,7 +27,6 @@ export default function Page() {
         toast({
           title: "Sign in success!",
         });
-        router.refresh();
         router.push("/feed");
       } else {
         toast({

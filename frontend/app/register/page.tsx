@@ -41,7 +41,6 @@ export default function Page() {
           title: "Sign up success!",
           description: "Sign in with your register credentials now!",
         });
-        router.refresh();
         router.push("/signin");
       } else {
         toast({
