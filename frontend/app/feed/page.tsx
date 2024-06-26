@@ -1,9 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { getServerSession } from "next-auth";
+import { NEXT_AUTH_CONFIG } from "../lib/authconfig";
 
 const Page = async () => {
-  const session = await getServerSession();
+  const session = await getServerSession(NEXT_AUTH_CONFIG);
   console.log("session", session);
   return (
     <div className="pt-20">
