@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { LogOut } from "lucide-react";
 import Link from "next/link";
 import { JSX, SVGProps } from "react";
 
@@ -104,6 +105,9 @@ const Links = ({ handleLogout }: any) => {
         size="sm"
       >
         Logout
+        <span>
+          <LogOut className="h-4 w-4 mx-2" />
+        </span>
       </Button>
     </>
   );

@@ -4,8 +4,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 const BlogCards = ({ token }: { token: string }) => {
+  const router = useRouter();
+
   const [blogs, setBlogs] = useState({ number_of_posts: null, posts: [] });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -78,7 +81,12 @@ const BlogCards = ({ token }: { token: string }) => {
           className="bg-background rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-500"
         >
           <CardHeader>
-            <CardTitle>{ele.title}</CardTitle>
+            <CardTitle
+              onClick={() => router.push(`/blogs/${ele.id}`)}
+              className="hover:underline cursor-pointer"
+            >
+              {ele.title}
+            </CardTitle>
             <div className="flex items-center text-muted-foreground text-sm mb-4">
               <Avatar>
                 <AvatarImage src="https://github.com/shadcn.png" />
