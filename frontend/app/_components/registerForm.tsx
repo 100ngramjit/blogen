@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { LoaderButton } from "@/components/ui/loader-button";
 import { Button } from "@/components/ui/button";
-import { Eye, EyeOff } from "lucide-react";
+import { ChevronsRight, Eye, EyeOff } from "lucide-react";
 
 export default function RegisterForm({ handleSubmit, isLoading }: any) {
   const [name, setName] = useState("");
@@ -148,6 +148,9 @@ export default function RegisterForm({ handleSubmit, isLoading }: any) {
             </div>
             <LoaderButton type="submit" isLoading={isLoading}>
               Register
+              <span>
+                <ChevronsRight className="h-5 w-5 mx-2" />
+              </span>
             </LoaderButton>
           </form>
         </div>

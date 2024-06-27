@@ -1,12 +1,12 @@
 "use client";
 import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { LoaderButton } from "@/components/ui/loader-button";
 import { useRouter } from "next/navigation";
+import { Send } from "lucide-react";
 
 const Page = () => {
   const router = useRouter();
@@ -96,6 +96,9 @@ const Page = () => {
             </div>
             <LoaderButton type="submit" isLoading={isLoading}>
               Publish
+              <span>
+                <Send className="h-4 w-4 mx-2" />
+              </span>
             </LoaderButton>
           </form>
         </div>

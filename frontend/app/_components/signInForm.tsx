@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { LoaderButton } from "@/components/ui/loader-button";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, LogIn } from "lucide-react";
 
 export default function SignInForm({ handleSubmit, isLoading }: any) {
   const [email, setEmail] = useState("");
@@ -90,6 +90,9 @@ export default function SignInForm({ handleSubmit, isLoading }: any) {
             </div>
             <LoaderButton type="submit" isLoading={isLoading}>
               Sign in
+              <span>
+                <LogIn className="h-4 w-4 mx-2" />
+              </span>
             </LoaderButton>
           </form>
         </div>
