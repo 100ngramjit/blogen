@@ -1,9 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getServerSession } from "next-auth";
 import { NEXT_AUTH_CONFIG } from "../../lib/authconfig";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import BlogCards from "../_components/blog-cards";
-import { Skeleton } from "@/components/ui/skeleton";
 
 const Page = async () => {
   const session = await getServerSession(NEXT_AUTH_CONFIG);
