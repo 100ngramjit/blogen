@@ -5,11 +5,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
+import { LoaderButton } from "@/components/ui/loader-button";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
+  const router = useRouter();
   const { toast } = useToast();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -21,6 +25,7 @@ const Page = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const response = await fetch("/api/blogs/create", {
         method: "POST",
@@ -37,12 +42,15 @@ const Page = () => {
         toast({
           title: "Blog published successfully",
         });
+        setIsLoading(false);
+        router.push("/blogs");
       } else {
         toast({
           title: "server error! please try again",
           variant: "destructive",
         });
         console.error("Failed to create blog post");
+        setIsLoading(false);
       }
     } catch (error) {
       toast({
@@ -50,6 +58,7 @@ const Page = () => {
         variant: "destructive",
       });
       console.error("An error occurred:", error);
+      setIsLoading(false);
     }
   };
 
@@ -85,12 +94,9 @@ const Page = () => {
                 onChange={handleContentChange}
               />
             </div>
-            <Button
-              type="submit"
-              className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-            >
+            <LoaderButton type="submit" isLoading={isLoading}>
               Publish
-            </Button>
+            </LoaderButton>
           </form>
         </div>
       </section>
