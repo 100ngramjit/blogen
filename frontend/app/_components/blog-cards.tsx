@@ -1,36 +1,73 @@
 "use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import axios from "axios";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 const BlogCards = ({ token }: { token: string }) => {
-  const [blogs, setBlogs] = useState({ number_of_posts: 0, posts: [] });
+  const [blogs, setBlogs] = useState({ number_of_posts: null, posts: [] });
+  const [isLoading, setIsLoading] = useState(false);
+
   const getBlogs = async (token: string) => {
-    let headersList = {
-      accept:
-        "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-      "accept-language": "en-GB,en-US;q=0.9,en;q=0.8",
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    };
+    try {
+      setIsLoading(true);
+      let headersList = {
+        accept:
+          "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+        "accept-language": "en-GB,en-US;q=0.9,en;q=0.8",
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      };
 
-    let reqOptions = {
-      url: "https://my-app.blogen.workers.dev/api/article/all",
-      method: "GET",
-      headers: headersList,
-    };
+      let reqOptions = {
+        url: "https://my-app.blogen.workers.dev/api/article/all",
+        method: "GET",
+        headers: headersList,
+      };
 
-    let response = await axios.request(reqOptions);
-    console.log(response.data);
-    setBlogs(response.data);
+      let response = await axios.request(reqOptions);
+      console.log(response.data);
+      setIsLoading(false);
+      setBlogs(response.data);
+    } catch (e) {
+      console.error(e);
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
     getBlogs(token);
   }, []);
 
-  if (!blogs?.number_of_posts) {
-    return <div>No Blogs Yet!</div>;
+  if (blogs?.number_of_posts === 0) {
+    return (
+      <>
+        <div />
+        <div>
+          <p className="text-center">
+            No blogs yet! Get started
+            <Link
+              href="/blogs/create"
+              className="px-1 text-primary hover:underline"
+            >
+              here
+            </Link>
+          </p>
+        </div>
+        <div />
+      </>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <>
+        {[1, 2, 3, 4, 5, 6].map((ele) => (
+          <Skeleton key={ele} className="w-full h-56 rounded-xl" />
+        ))}
+      </>
+    );
   }
 
   return (

@@ -108,5 +108,4 @@ const Links = ({ handleLogout }: any) => {
     </>
   );
 };
-//TODO: getBlogs API
 //TODO: password Hashing
