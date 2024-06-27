@@ -100,7 +100,7 @@ const Links = ({ handleLogout }: any) => {
       </Link>
       <Button
         onClick={handleLogout}
-        className="bg-inherit border-2 border-red-500"
+        className="bg-inherit border-2 border-white-500"
         size="sm"
       >
         Logout
@@ -108,5 +108,5 @@ const Links = ({ handleLogout }: any) => {
     </>
   );
 };
-
-//TODO: Add loading state to sign in and sign up buttons
+//TODO: getBlogs API
+//TODO: password Hashing

@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { LoaderButton } from "@/components/ui/loader-button";
 
 export default function RegisterForm({ handleSubmit, isLoading }: any) {
