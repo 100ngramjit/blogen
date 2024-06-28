@@ -3,10 +3,11 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { LogOut } from "lucide-react";
 import Link from "next/link";
 import { JSX, SVGProps } from "react";
+import { ModeToggle } from "./theme-toggle";
 
 const Navbar = ({ handleLogout }: any) => {
   return (
-    <header className="bg-violet-600 text-white rounded-b-3xl bg-gradient-to-r from-[#6366F1] to-[#9333EA] text-white fixed w-full">
+    <header className="bg-violet-600 text-white rounded-b-3xl bg-gradient-to-r from-[#6366F1] to-[#9333EA] text-white fixed w-full z-50">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
         <Link
           href="/blogs"
@@ -99,11 +100,8 @@ const Links = ({ handleLogout }: any) => {
       >
         Create
       </Link>
-      <Button
-        onClick={handleLogout}
-        className="bg-inherit border-2 border-white-500"
-        size="sm"
-      >
+      <ModeToggle />
+      <Button onClick={handleLogout} className="bg-inherit border-2" size="sm">
         Logout
         <span>
           <LogOut className="h-4 w-4 mx-2" />

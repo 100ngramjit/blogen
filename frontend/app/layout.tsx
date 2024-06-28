@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Karla } from "next/font/google";
 import "./globals.css";
-import { Theme } from "@radix-ui/themes";
 import { Toaster } from "@/components/ui/toaster";
 import { Providers } from "./providers";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Karla({ subsets: ["latin"] });
 
@@ -20,16 +20,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Theme
-          accentColor="violet"
-          grayColor="gray"
-          panelBackground="translucent"
-          scaling="100%"
-          radius="medium"
-          appearance="light"
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
         >
           <Providers>{children}</Providers>
-        </Theme>
+        </ThemeProvider>
+
         <Toaster />
       </body>
     </html>
