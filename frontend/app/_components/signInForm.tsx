@@ -6,6 +6,13 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { LoaderButton } from "@/components/ui/loader-button";
 import { Eye, EyeOff, LogIn } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function SignInForm({ handleSubmit, isLoading }: any) {
   const [email, setEmail] = useState("");
@@ -25,78 +32,82 @@ export default function SignInForm({ handleSubmit, isLoading }: any) {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="mx-auto flex max-w-md flex-col items-center justify-center px-4 py-12 m-2 rounded shadow-2xl shadow-black bg-white border-2 border-black">
-        <div className="w-full space-y-6">
-          <div className="text-center">
-            <h2 className="text-3xl font-bold tracking-tight">
-              Sign in to your account
-            </h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              <span>Don&apos;t have an account?</span>
-              <Link
-                href="/register"
-                className="px-1 font-medium text-primary hover:underline"
-                prefetch={false}
-              >
-                Register
-              </Link>
-            </p>
-          </div>
+    <div className="flex items-center justify-center min-h-screen ">
+      <Card className="w-[350px]">
+        {/* <div className="w-full space-y-6"> */}
+        <CardHeader className="text-center">
+          <CardTitle className="text-3xl font-bold tracking-tight">
+            Sign in to your account
+          </CardTitle>
+          <CardDescription className="mt-2 text-sm text-muted-foreground">
+            <span>Don&apos;t have an account?</span>
+            <Link
+              href="/register"
+              className="px-1 font-medium text-primary hover:underline"
+              prefetch={false}
+            >
+              Register
+            </Link>
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
           <form
             className="space-y-6"
             onSubmit={(e) => handleSubmit(e, email, password)}
           >
-            <div>
-              <Label htmlFor="email" className="my-2">
-                Email address
-              </Label>
-              <Input
-                id="email"
-                type="email"
-                autoComplete="email"
-                required
-                placeholder="name@example.com"
-                value={email}
-                onChange={handleEmailChange}
-              />
-            </div>
-            <div>
-              <div className="flex items-center justify-between">
-                <Label htmlFor="password" className="my-1">
-                  Password
+            <div className="grid w-full items-center gap-4">
+              <div>
+                <Label htmlFor="email" className="my-2">
+                  Email address
                 </Label>
-              </div>
-              <div className="relative">
                 <Input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  autoComplete="current-password"
+                  id="email"
+                  type="email"
+                  autoComplete="email"
                   required
-                  placeholder="Enter your password"
-                  value={password}
-                  onChange={handlePasswordChange}
-                  className="pr-10"
+                  placeholder="name@example.com"
+                  value={email}
+                  onChange={handleEmailChange}
                 />
-                <Button
-                  type="button"
-                  onClick={togglePasswordVisibility}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
-                  variant="link"
-                >
-                  {showPassword ? <EyeOff /> : <Eye />}
-                </Button>
               </div>
+              <div>
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="password" className="my-1">
+                    Password
+                  </Label>
+                </div>
+                <div className="relative">
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    autoComplete="current-password"
+                    required
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={handlePasswordChange}
+                    className="pr-10"
+                  />
+                  <Button
+                    type="button"
+                    onClick={togglePasswordVisibility}
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+                    variant="link"
+                  >
+                    {showPassword ? <EyeOff /> : <Eye />}
+                  </Button>
+                </div>
+              </div>
+              <LoaderButton type="submit" isLoading={isLoading}>
+                Sign in
+                <span>
+                  <LogIn className="h-4 w-4 mx-2" />
+                </span>
+              </LoaderButton>
             </div>
-            <LoaderButton type="submit" isLoading={isLoading}>
-              Sign in
-              <span>
-                <LogIn className="h-4 w-4 mx-2" />
-              </span>
-            </LoaderButton>
           </form>
-        </div>
-      </div>
+        </CardContent>
+        {/* </div> */}
+      </Card>
     </div>
   );
 }
