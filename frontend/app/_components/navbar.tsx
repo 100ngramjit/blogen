@@ -1,5 +1,13 @@
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
+
 import { LogOut } from "lucide-react";
 import Link from "next/link";
 import { JSX, SVGProps } from "react";
@@ -28,8 +36,39 @@ const Navbar = ({ handleLogout }: any) => {
             </Button>
           </SheetTrigger>
           <SheetContent side="right" className="bg-violet-600 text-white">
+            <SheetTitle className="px-4 text-sm ">
+              <VisuallyHidden.Root>Menu</VisuallyHidden.Root>
+            </SheetTitle>
             <div className="grid gap-6 p-4">
-              <Links handleLogout={handleLogout} />
+              <SheetClose asChild>
+                <Link
+                  href="/blogs"
+                  className="hover:text-violet-200"
+                  prefetch={false}
+                >
+                  Home
+                </Link>
+              </SheetClose>
+              <SheetClose asChild>
+                <Link
+                  href="/blogs/create"
+                  className="hover:text-violet-200"
+                  prefetch={false}
+                >
+                  Create
+                </Link>
+              </SheetClose>
+              <ModeToggle />
+              <Button
+                onClick={handleLogout}
+                className="bg-inherit border-2"
+                size="sm"
+              >
+                Logout
+                <span>
+                  <LogOut className="h-4 w-4 mx-2" />
+                </span>
+              </Button>
             </div>
           </SheetContent>
         </Sheet>
@@ -37,6 +76,7 @@ const Navbar = ({ handleLogout }: any) => {
     </header>
   );
 };
+
 export default Navbar;
 
 function FeatherIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
@@ -84,15 +124,9 @@ function MenuIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
 const Links = ({ handleLogout }: any) => {
   return (
     <>
-      <Link
-        href="/blogs
-    "
-        className="hover:text-violet-200"
-        prefetch={false}
-      >
+      <Link href="/blogs" className="hover:text-violet-200" prefetch={false}>
         Home
       </Link>
-
       <Link
         href="/blogs/create"
         className="hover:text-violet-200"
@@ -110,4 +144,5 @@ const Links = ({ handleLogout }: any) => {
     </>
   );
 };
-//TODO: password Hashing
+
+//Password Hashing
