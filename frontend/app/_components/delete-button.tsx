@@ -21,7 +21,6 @@ export function DeleteButton({ session, id }: any) {
   const router = useRouter();
   const { toast } = useToast();
 
-  const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const onDeleteConfirm = async (e: React.FormEvent) => {
@@ -48,7 +47,6 @@ export function DeleteButton({ session, id }: any) {
         description: "Blog deleted successfully",
       });
       router.push("/blogs");
-      setOpen(false);
     } catch (e: any) {
       setIsLoading(false);
 
