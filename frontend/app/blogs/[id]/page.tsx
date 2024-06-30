@@ -6,6 +6,7 @@ import { getServerSession } from "next-auth";
 import { signOut } from "next-auth/react";
 import BackButton from "@/app/_components/back-button";
 import { EditDialog } from "@/app/_components/edit-dialog";
+import { DeleteButton } from "@/app/_components/delete-button";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -38,7 +39,10 @@ export default async function Page({ params }: { params: { id: string } }) {
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
               <p>{article.title}</p>
-              <EditDialog article={article} id={id} session={session} />
+              <div>
+                <EditDialog article={article} id={id} session={session} />
+                <DeleteButton session={session} id={id} />
+              </div>
             </CardTitle>
             <div className="flex items-center text-muted-foreground text-sm mb-4">
               <Avatar>
