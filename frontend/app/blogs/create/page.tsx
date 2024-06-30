@@ -71,7 +71,7 @@ const Page = () => {
               Create a New Blog
             </h1>
             <p className="text-muted-foreground md:text-xl">
-              Share your thoughts, insights, and stories with the world.
+              Jot down your thoughts, insights, and stories .
             </p>
           </div>
           <form className="space-y-4 text-left" onSubmit={handleSubmit}>

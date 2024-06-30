@@ -5,6 +5,7 @@ import { NEXT_AUTH_CONFIG } from "@/lib/authconfig";
 import { getServerSession } from "next-auth";
 import { signOut } from "next-auth/react";
 import BackButton from "@/app/_components/back-button";
+import { EditDialog } from "@/app/_components/edit-dialog";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -35,7 +36,10 @@ export default async function Page({ params }: { params: { id: string } }) {
         <BackButton />
         <Card className="bg-background rounded-lg overflow-hidden shadow-md hover:shadow-2xl transition-shadow duration-500">
           <CardHeader>
-            <CardTitle>{article.title}</CardTitle>
+            <CardTitle className="flex items-center justify-between">
+              <p>{article.title}</p>
+              <EditDialog article={article} id={id} session={session} />
+            </CardTitle>
             <div className="flex items-center text-muted-foreground text-sm mb-4">
               <Avatar>
                 <AvatarImage src="https://github.com/shadcn.png" />
