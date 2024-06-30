@@ -13,7 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
-import { Trash2 } from "lucide-react";
+import { Loader2, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -79,8 +79,14 @@ export function DeleteButton({ session, id }: any) {
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
             onClick={onDeleteConfirm}
-            className="border-destructive bg-destructive text-destructive-foreground"
+            disabled={isLoading}
+            className="border-destructive bg-destructive text-destructive-foreground active:bg-destructive hover:bg-destructive"
           >
+            {isLoading && (
+              <span>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              </span>
+            )}
             Continue
           </AlertDialogAction>
         </AlertDialogFooter>

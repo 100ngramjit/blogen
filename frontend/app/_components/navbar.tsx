@@ -135,7 +135,11 @@ const Links = ({ handleLogout }: any) => {
         Create
       </Link>
       <ModeToggle />
-      <Button onClick={handleLogout} className="bg-inherit border-2" size="sm">
+      <Button
+        onClick={handleLogout}
+        className="bg-inherit border-2 dark:border-white"
+        size="sm"
+      >
         Logout
         <span>
           <LogOut className="h-4 w-4 mx-2" />
