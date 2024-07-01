@@ -6,7 +6,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-const BlogCards = ({ token }: { token: string }) => {
+const BlogCards = ({ token, name }: { token: string; name: string }) => {
   const router = useRouter();
 
   const [blogs, setBlogs] = useState({ number_of_posts: null, posts: [] });
@@ -92,7 +92,7 @@ const BlogCards = ({ token }: { token: string }) => {
                 <AvatarImage src="https://github.com/shadcn.png" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
-              <span className="px-2">John Doe</span>
+              <span className="px-2">{name}</span>
             </div>
           </CardHeader>
           <CardContent>

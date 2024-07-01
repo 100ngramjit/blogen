@@ -15,7 +15,6 @@ export default async function Page({ params }: { params: { id: string } }) {
   if (!session) {
     await signOut({ callbackUrl: "/" });
   }
-
   let headersList = {
     accept: "application/json",
     "accept-language": "en-GB,en-US;q=0.9,en;q=0.8",
@@ -49,7 +48,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 <AvatarImage src="https://github.com/shadcn.png" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
-              <span className="px-2">John Doe</span>
+              <span className="px-2">{session?.user.name}</span>
             </div>
           </CardHeader>
           <CardContent>

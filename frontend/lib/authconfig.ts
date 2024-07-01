@@ -41,13 +41,14 @@ export const NEXT_AUTH_CONFIG = {
           }
         );
         const user = await res.json();
-        console.log("user", user.token);
+        // console.log("user", user);
 
         if (res.ok && user.token) {
           return {
             id: user.id || credentials.username,
             email: credentials.username,
             jwtToken: user.token,
+            name: user.name,
           } as CustomUser;
         }
         return null;
