@@ -78,15 +78,11 @@ const BlogCards = ({ token, name }: { token: string; name: string }) => {
       {blogs.posts.map((ele: any) => (
         <Card
           key={ele?.id}
-          className="bg-background rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-500"
+          className="bg-background rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-500 cursor-pointer"
+          onClick={() => router.push(`/blogs/${ele.id}`)}
         >
           <CardHeader>
-            <CardTitle
-              onClick={() => router.push(`/blogs/${ele.id}`)}
-              className="hover:underline cursor-pointer"
-            >
-              {ele.title}
-            </CardTitle>
+            <CardTitle className="hover:underline ">{ele.title}</CardTitle>
             <div className="flex items-center text-muted-foreground text-sm mb-4">
               <Avatar>
                 <AvatarImage src="https://github.com/shadcn.png" />
