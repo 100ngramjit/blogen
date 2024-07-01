@@ -1,13 +1,22 @@
 "use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import axios from "axios";
+import { ClockIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-const BlogCards = ({ token, name }: { token: string; name: string }) => {
+const BlogCards = ({ session, blogtype }: any) => {
   const router = useRouter();
+  const token = session.user.jwtToken;
+  const name = session.user.name;
 
   const [blogs, setBlogs] = useState({ number_of_posts: null, posts: [] });
   const [isLoading, setIsLoading] = useState(false);
@@ -24,7 +33,7 @@ const BlogCards = ({ token, name }: { token: string; name: string }) => {
       };
 
       let reqOptions = {
-        url: "https://my-app.blogen.workers.dev/api/article/all",
+        url: `https://my-app.blogen.workers.dev/api/article/${blogtype}`,
         method: "GET",
         headers: headersList,
       };
@@ -77,23 +86,29 @@ const BlogCards = ({ token, name }: { token: string; name: string }) => {
     <>
       {blogs.posts.map((ele: any) => (
         <Card
+          className="flex flex-col rounded-lg shadow-md"
           key={ele?.id}
-          className="bg-background rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-500 cursor-pointer"
-          onClick={() => router.push(`/blogs/${ele.id}`)}
+          onClick={() => router.push(`/blogs/details/${ele.id}`)}
         >
           <CardHeader>
-            <CardTitle className="hover:underline ">{ele.title}</CardTitle>
-            <div className="flex items-center text-muted-foreground text-sm mb-4">
-              <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-              <span className="px-2">{name}</span>
-            </div>
+            <CardTitle className="text-2xl font-bold hover:underline">
+              {ele.title}
+            </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="flex-grow text-muted-foreground">
             <p className="text-muted-foreground line-clamp-3">{ele.content}</p>
           </CardContent>
+          <CardFooter className="flex items-center justify-between text-sm mt-auto">
+            <div>
+              <div className="font-medium">
+                {blogtype === "all" ? name : ele.author.name}
+              </div>
+            </div>
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <ClockIcon className="w-4 h-4" />
+              <span>{new Date(ele.createdAt).toLocaleString()}</span>
+            </div>
+          </CardFooter>
         </Card>
       ))}
     </>
