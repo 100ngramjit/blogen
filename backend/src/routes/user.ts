@@ -25,6 +25,7 @@ userRouter.post("/signup", async (c) => {
     );
     return c.json({
       token,
+      name: body.name,
     });
   } catch (e) {
     c.status(403);
@@ -52,7 +53,7 @@ userRouter.post("/signin", async (c) => {
         },
         c.env.JWT_SECRET
       );
-      return c.json({ token: jwtResponse });
+      return c.json({ token: jwtResponse, name: user.name });
     }
     return c.json({ msg: "The email or password provided is wrong" });
   } catch (e) {
