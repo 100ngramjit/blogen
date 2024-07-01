@@ -18,7 +18,7 @@ const Page = async () => {
         </p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <BlogCards token={session?.user.jwtToken!} name={session?.user.name!} />
+        <BlogCards session={session} blogtype="latest" />
       </div>
     </div>
   );
