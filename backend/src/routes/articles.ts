@@ -84,6 +84,13 @@ articleRouter.get("/details/:id", async (c) => {
       where: {
         id: id,
       },
+      include: {
+        author: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
     if (!post) {
       return c.json({ err: "No article found with this id" });
@@ -125,6 +132,31 @@ articleRouter.get("/all", async (c) => {
       },
     });
     return c.json({ posts: posts, number_of_posts: posts.length });
+  } catch (e) {
+    c.status(411);
+    return c.json({ err: e });
+  }
+});
+
+articleRouter.get("/latest", async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+  try {
+    const latestPosts = await prisma.post.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+      take: 10,
+      include: {
+        author: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
+    return c.json({ posts: latestPosts, number_of_posts: latestPosts.length });
   } catch (e) {
     c.status(411);
     return c.json({ err: e });
