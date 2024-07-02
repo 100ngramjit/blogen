@@ -14,7 +14,7 @@ const Page = async () => {
           Stories & Ideas
         </h1>
         <p className="text-sm text-gray-500">
-          The Latest Blogs according to your interests
+          The latest blogs according to your interests
         </p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
