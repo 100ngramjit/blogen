@@ -1,4 +1,5 @@
 "use client";
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
@@ -90,23 +91,24 @@ const BlogCards = ({ session, blogtype }: any) => {
           onClick={() => router.push(`/blogs/details/${ele.id}`)}
         >
           <CardHeader>
-            <CardTitle className="text-2xl font-bold hover:underline">
-              {ele.title}
-            </CardTitle>
+            <CardTitle className="text-2xl font-bold">{ele.title}</CardTitle>
           </CardHeader>
           <CardContent className="flex-grow text-muted-foreground">
             <p className="text-muted-foreground line-clamp-3">{ele.content}</p>
           </CardContent>
           <CardFooter className="flex items-center justify-between text-sm mt-auto">
             <div>
-              <div className="font-medium">
+              <Badge variant="secondary" className="font-medium">
                 {blogtype === "all" ? name : ele.author.name}
-              </div>
+              </Badge>
             </div>
-            <div className="flex items-center gap-2 text-muted-foreground">
+            <Badge
+              variant="secondary"
+              className="flex items-center gap-2 text-muted-foreground"
+            >
               <ClockIcon className="w-4 h-4" />
-              <span>{new Date(ele.createdAt).toLocaleString()}</span>
-            </div>
+              {new Date(ele.createdAt).toLocaleString()}
+            </Badge>
           </CardFooter>
         </Card>
       ))}

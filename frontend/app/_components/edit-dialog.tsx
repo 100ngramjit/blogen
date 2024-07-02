@@ -84,7 +84,7 @@ export function EditDialog({ article, id, session }: any) {
           <Pencil className="h-4 w-4" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px]  lg:min-w-[920px] ">
         <DialogHeader>
           <DialogTitle>Edit blog</DialogTitle>
           <DialogDescription>
@@ -115,10 +115,15 @@ export function EditDialog({ article, id, session }: any) {
               onChange={onContentChange}
             />
           </div>
+          <DialogFooter>
+            <LoaderButton type="submit" isLoading={isLoading}>
+              Save changes
+              <span>
+                <Save className="h-4 w-4 ml-2" />
+              </span>
+            </LoaderButton>
+          </DialogFooter>
         </form>
-        <DialogFooter>
-          <Button type="submit">Save changes</Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
