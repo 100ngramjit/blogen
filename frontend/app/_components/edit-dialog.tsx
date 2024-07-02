@@ -80,23 +80,20 @@ export function EditDialog({ article, id, session }: any) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="ghost">
+        <Button variant="ghost" size="icon">
           <Pencil className="h-4 w-4" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-sm lg:max-w-lg min-w-[90%] md:min-w-[50%] h-[75vh]">
+      <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit Blog</DialogTitle>
+          <DialogTitle>Edit blog</DialogTitle>
           <DialogDescription>
             Make changes to your blog here. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
-        <form
-          className="grid gap-4 py-4 overflow-y-auto h-full"
-          onSubmit={onSave}
-        >
-          <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
-            <Label htmlFor="title" className="text-left">
+        <form className="grid gap-4 py-4" onSubmit={onSave}>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-left">
               Title
             </Label>
             <Input
@@ -106,27 +103,22 @@ export function EditDialog({ article, id, session }: any) {
               onChange={onTitleChange}
             />
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+          <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="content" className="text-left">
               Content
             </Label>
             <Textarea
               id="content"
               placeholder="Edit your blog post here..."
-              className="col-span-3"
+              className="col-span-3 h-10"
               value={content}
               onChange={onContentChange}
             />
           </div>
-          <DialogFooter>
-            <LoaderButton isLoading={isLoading} type="submit">
-              Save changes
-              <span>
-                <Save className="h-4 w-4 mx-2" />
-              </span>
-            </LoaderButton>
-          </DialogFooter>
         </form>
+        <DialogFooter>
+          <Button type="submit">Save changes</Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

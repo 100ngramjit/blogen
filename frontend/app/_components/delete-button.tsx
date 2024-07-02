@@ -61,7 +61,7 @@ export function DeleteButton({ session, id }: any) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="ghost">
+        <Button variant="ghost" size="icon">
           <Trash2 className="h-4 w-4" />
         </Button>
       </AlertDialogTrigger>
