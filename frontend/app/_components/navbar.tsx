@@ -58,6 +58,15 @@ const Navbar = ({ handleLogout }: any) => {
                   Create
                 </Link>
               </SheetClose>
+              <SheetClose asChild>
+                <Link
+                  href="/blogs/byme"
+                  className="hover:text-violet-200"
+                  prefetch={false}
+                >
+                  My Blogs
+                </Link>
+              </SheetClose>
               <ModeToggle />
               <Button
                 onClick={handleLogout}
@@ -133,6 +142,13 @@ const Links = ({ handleLogout }: any) => {
         prefetch={false}
       >
         Create
+      </Link>
+      <Link
+        href="/blogs/byme"
+        className="hover:text-violet-200"
+        prefetch={false}
+      >
+        My Blogs
       </Link>
       <ModeToggle />
       <Button
