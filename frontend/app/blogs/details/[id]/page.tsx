@@ -36,10 +36,10 @@ export default async function Page({ params }: { params: { id: string } }) {
         <BackButton />
         <Card className="bg-background rounded-lg overflow-hidden shadow-md hover:shadow-2xl transition-shadow duration-500">
           <CardHeader>
-            <CardTitle className="flex items-center justify-between">
+            <CardTitle className="flex items-top justify-between">
               <p className="text-4xl">{article.title}</p>
               {article.author.email === session?.user.email && (
-                <div>
+                <div className="flex justify-start">
                   <EditDialog article={article} id={id} session={session} />
                   <DeleteButton session={session} id={id} />
                 </div>
@@ -64,4 +64,3 @@ export default async function Page({ params }: { params: { id: string } }) {
     return <div>Error fetching post details.</div>;
   }
 }
-//TODO : Render edit and delete button based on user and author
