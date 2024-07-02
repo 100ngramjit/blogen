@@ -88,6 +88,7 @@ articleRouter.get("/details/:id", async (c) => {
         author: {
           select: {
             name: true,
+            email: true,
           },
         },
       },
