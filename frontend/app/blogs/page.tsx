@@ -4,7 +4,6 @@ import BlogCards from "../_components/blog-cards";
 
 const Page = async () => {
   const session = await getServerSession(NEXT_AUTH_CONFIG);
-  console.log("session", session);
 
   return (
     <div className="container mx-auto px-4 py-8">

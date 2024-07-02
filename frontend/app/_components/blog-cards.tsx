@@ -39,7 +39,6 @@ const BlogCards = ({ session, blogtype }: any) => {
       };
 
       let response = await axios.request(reqOptions);
-      console.log(response.data);
       setIsLoading(false);
       setBlogs(response.data);
     } catch (e) {

@@ -34,9 +34,7 @@ const Page = () => {
         },
         body: JSON.stringify({ title, content }),
       });
-      console.log("res", response);
       if (response.ok) {
-        console.log("Blog post created successfully");
         setTitle("");
         setContent("");
         toast({
