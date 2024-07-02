@@ -1,5 +1,4 @@
 "use client";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Card,
   CardContent,
@@ -86,7 +85,7 @@ const BlogCards = ({ session, blogtype }: any) => {
     <>
       {blogs.posts.map((ele: any) => (
         <Card
-          className="flex flex-col rounded-lg shadow-md"
+          className="flex flex-col rounded-lg shadow-md cursor-pointer"
           key={ele?.id}
           onClick={() => router.push(`/blogs/details/${ele.id}`)}
         >
