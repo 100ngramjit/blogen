@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CardHeader, CardTitle, CardContent, Card } from "@/components/ui/card";
 import { NEXT_AUTH_CONFIG } from "@/lib/authconfig";
 import { getServerSession } from "next-auth";
@@ -38,17 +37,15 @@ export default async function Page({ params }: { params: { id: string } }) {
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
               <p>{article.title}</p>
-              <div>
-                <EditDialog article={article} id={id} session={session} />
-                <DeleteButton session={session} id={id} />
-              </div>
+              {article.author.email === session?.user.email && (
+                <div>
+                  <EditDialog article={article} id={id} session={session} />
+                  <DeleteButton session={session} id={id} />
+                </div>
+              )}
             </CardTitle>
             <div className="flex items-center text-muted-foreground text-sm mb-4">
-              <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-              <span className="px-2">{session?.user.name}</span>
+              by<span className="px-1">{article?.author.name}</span>
             </div>
           </CardHeader>
           <CardContent>
@@ -64,3 +61,4 @@ export default async function Page({ params }: { params: { id: string } }) {
     return <div>Error fetching post details.</div>;
   }
 }
+//TODO : Render edit and delete button based on user and author
