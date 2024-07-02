@@ -148,7 +148,7 @@ articleRouter.get("/latest", async (c) => {
       orderBy: {
         createdAt: "desc",
       },
-      take: 10,
+      take: 6,
       include: {
         author: {
           select: {
