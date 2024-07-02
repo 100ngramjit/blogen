@@ -6,6 +6,7 @@ import { signOut } from "next-auth/react";
 import BackButton from "@/app/_components/back-button";
 import { EditDialog } from "@/app/_components/edit-dialog";
 import { DeleteButton } from "@/app/_components/delete-button";
+import { ClockIcon } from "lucide-react";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -36,7 +37,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         <Card className="bg-background rounded-lg overflow-hidden shadow-md hover:shadow-2xl transition-shadow duration-500">
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
-              <p>{article.title}</p>
+              <p className="text-4xl">{article.title}</p>
               {article.author.email === session?.user.email && (
                 <div>
                   <EditDialog article={article} id={id} session={session} />
@@ -47,11 +48,13 @@ export default async function Page({ params }: { params: { id: string } }) {
             <div className="flex items-center text-muted-foreground text-sm mb-4">
               by<span className="px-1">{article?.author.name}</span>
             </div>
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <ClockIcon className="w-4 h-4" />
+              <span>{new Date(article.createdAt).toLocaleString()}</span>
+            </div>
           </CardHeader>
           <CardContent>
-            <p className="text-muted-foreground whitespace-pre-wrap">
-              {article.content}
-            </p>
+            <p className="whitespace-pre-wrap">{article.content}</p>
           </CardContent>
         </Card>
       </div>
