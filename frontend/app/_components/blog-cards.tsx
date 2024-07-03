@@ -7,12 +7,30 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
 import axios from "axios";
 import { ClockIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+
+function CardSkeleton() {
+  return (
+    <Card className="flex flex-col rounded-lg shadow-md animate-pulse">
+      <CardHeader>
+        <div className="h-8 bg-gray-300 rounded w-3/4"></div>
+      </CardHeader>
+      <CardContent className="flex-grow">
+        <div className="h-4 bg-gray-300 rounded w-full mb-2"></div>
+        <div className="h-4 bg-gray-300 rounded w-full mb-2"></div>
+        <div className="h-4 bg-gray-300 rounded w-3/4"></div>
+      </CardContent>
+      <CardFooter className="flex items-center justify-between mt-auto">
+        <div className="h-6 bg-gray-300 rounded w-20"></div>
+        <div className="h-6 bg-gray-300 rounded w-32"></div>
+      </CardFooter>
+    </Card>
+  );
+}
 const BlogCards = ({ session, blogtype }: any) => {
   const router = useRouter();
   const token = session.user.jwtToken;
@@ -75,7 +93,7 @@ const BlogCards = ({ session, blogtype }: any) => {
     return (
       <>
         {[1, 2, 3, 4, 5, 6].map((ele) => (
-          <Skeleton key={ele} className="w-full h-56 rounded-xl" />
+          <CardSkeleton key={ele} />
         ))}
       </>
     );
@@ -98,7 +116,7 @@ const BlogCards = ({ session, blogtype }: any) => {
           <CardFooter className="flex items-center justify-between text-sm mt-auto">
             <div>
               <Badge variant="secondary" className="font-medium">
-                {blogtype === "all" ? name : ele.author.name}
+                {ele.author.name}
               </Badge>
             </div>
             <Badge

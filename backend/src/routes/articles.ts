@@ -131,6 +131,13 @@ articleRouter.get("/all", async (c) => {
       where: {
         authorId: authorId,
       },
+      include: {
+        author: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
     return c.json({ posts: posts, number_of_posts: posts.length });
   } catch (e) {
