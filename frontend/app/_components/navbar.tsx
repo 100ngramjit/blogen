@@ -29,7 +29,11 @@ const Navbar = ({ handleLogout }: any) => {
         </nav>
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="md:hidden">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden border border-white"
+            >
               <AlignJustify className="h-6 w-6" />
               <span className="sr-only">Toggle navigation</span>
             </Button>
