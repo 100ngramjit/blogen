@@ -8,6 +8,7 @@ import BackButton from "@/app/_components/back-button";
 import { EditDialog } from "@/app/_components/edit-dialog";
 import { DeleteButton } from "@/app/_components/delete-button";
 import { ClockIcon } from "lucide-react";
+import { ScrollProgressBar } from "@/app/_components/scroll-progress";
 
 async function fetchArticle(id: string, jwtToken: string) {
   const headersList = {
@@ -103,11 +104,14 @@ export default async function Page({ params }: { params: { id: string } }) {
   }
 
   return (
-    <div className="container mx-auto px-4 py-4">
-      <BackButton />
-      <Suspense fallback={<SkeletonLoader />}>
-        <ArticleContent id={id} session={session} />
-      </Suspense>
-    </div>
+    <>
+      <ScrollProgressBar />
+      <div className="container mx-auto px-4 py-4">
+        <BackButton />
+        <Suspense fallback={<SkeletonLoader />}>
+          <ArticleContent id={id} session={session} />
+        </Suspense>
+      </div>
+    </>
   );
 }
