@@ -14,7 +14,7 @@ import { ModeToggle } from "./theme-toggle";
 
 const Navbar = ({ handleLogout }: any) => {
   return (
-    <header className="bg-violet-600 text-white rounded-b-3xl bg-gradient-to-r from-[#6366F1] to-[#9333EA] text-white fixed w-full z-50">
+    <header className="bg-violet-600 text-white rounded-b-3xl bg-gradient-to-r from-[#6533EA] to-[#A233EA] text-white fixed w-full z-50">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
         <Link
           href="/blogs"
@@ -45,7 +45,7 @@ const Navbar = ({ handleLogout }: any) => {
                   className="hover:text-violet-200"
                   prefetch={false}
                 >
-                  Home
+                  Feed
                 </Link>
               </SheetClose>
               <SheetClose asChild>
@@ -74,7 +74,7 @@ const Navbar = ({ handleLogout }: any) => {
               >
                 Logout
                 <span>
-                  <LogOut className="h-4 w-4 mx-2" />
+                  <LogOut className="h-4 w-4 ml-2" />
                 </span>
               </Button>
             </div>
@@ -91,7 +91,7 @@ const Links = ({ handleLogout }: any) => {
   return (
     <>
       <Link href="/blogs" className="hover:text-violet-200" prefetch={false}>
-        Home
+        Feed
       </Link>
       <Link
         href="/blogs/create"
@@ -115,7 +115,7 @@ const Links = ({ handleLogout }: any) => {
       >
         Logout
         <span>
-          <LogOut className="h-4 w-4 mx-2" />
+          <LogOut className="h-4 w-4 ml-2" />
         </span>
       </Button>
     </>
