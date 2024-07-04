@@ -110,7 +110,7 @@ export function EditDialog({ article, id, session }: any) {
             <Textarea
               id="content"
               placeholder="Edit your blog post here..."
-              className="col-span-3 h-10"
+              className="col-span-3 min-h-[350px]"
               value={content}
               onChange={onContentChange}
             />
