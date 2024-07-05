@@ -71,7 +71,7 @@ async function ArticleContent({ id, session }: any) {
     <Card className="bg-background rounded-lg overflow-hidden shadow-md hover:shadow-2xl transition-shadow duration-500">
       <CardHeader>
         <CardTitle className="flex items-top justify-between">
-          <p className="text-4xl">{article.title}</p>
+          <p className="lg:text-4xl md:text-3xl sm:text-2xl">{article.title}</p>
           {article.author.email === session?.user.email && (
             <div className="flex justify-start">
               <EditDialog article={article} id={id} session={session} />
