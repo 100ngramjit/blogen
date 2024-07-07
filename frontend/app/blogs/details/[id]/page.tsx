@@ -68,7 +68,7 @@ async function ArticleContent({ id, session }: any) {
   const article = await fetchArticle(id, session.user.jwtToken);
 
   return (
-    <Card className="bg-background rounded-lg overflow-hidden shadow-md hover:shadow-2xl transition-shadow duration-500">
+    <Card className="bg-background rounded-lg overflow-hidden shadow-2xl ">
       <CardHeader>
         <CardTitle className="flex items-top justify-between">
           <p className="lg:text-4xl md:text-3xl sm:text-2xl">{article.title}</p>

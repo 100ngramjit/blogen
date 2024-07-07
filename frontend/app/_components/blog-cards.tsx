@@ -103,7 +103,7 @@ const BlogCards = ({ session, blogtype }: any) => {
     <>
       {blogs.posts.map((ele: any) => (
         <Card
-          className="flex flex-col rounded-lg shadow-md cursor-pointer"
+          className="flex flex-col rounded-lg shadow-2xl dark:shadow-lg cursor-pointer"
           key={ele?.id}
           onClick={() => router.push(`/blogs/details/${ele.id}`)}
         >
