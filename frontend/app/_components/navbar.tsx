@@ -11,8 +11,10 @@ import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { AlignJustify, Feather, LogOut } from "lucide-react";
 import Link from "next/link";
 import { ModeToggle } from "./theme-toggle";
+import { usePathname } from "next/navigation";
 
 const Navbar = ({ handleLogout }: any) => {
+  const pathname = usePathname();
   return (
     <header className="bg-violet-600 text-white rounded-b-3xl bg-gradient-to-r from-[#6533EA] to-[#A233EA] text-white fixed w-full z-50">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
@@ -46,7 +48,11 @@ const Navbar = ({ handleLogout }: any) => {
               <SheetClose asChild>
                 <Link
                   href="/blogs"
-                  className="hover:text-violet-200"
+                  className={`hover:text-violet-200 ${
+                    pathname === "/blogs"
+                      ? "bg-violet-500 text-white px-3 py-1 rounded-full text-sm font-semibold"
+                      : ""
+                  }`}
                   prefetch={false}
                 >
                   Feed
@@ -55,7 +61,11 @@ const Navbar = ({ handleLogout }: any) => {
               <SheetClose asChild>
                 <Link
                   href="/blogs/create"
-                  className="hover:text-violet-200"
+                  className={`hover:text-violet-200 ${
+                    pathname === "/blogs/create"
+                      ? "bg-violet-500 text-white px-3 py-1 rounded-full text-sm font-semibold"
+                      : ""
+                  }`}
                   prefetch={false}
                 >
                   Create
@@ -64,7 +74,11 @@ const Navbar = ({ handleLogout }: any) => {
               <SheetClose asChild>
                 <Link
                   href="/blogs/byme"
-                  className="hover:text-violet-200"
+                  className={`hover:text-violet-200 ${
+                    pathname === "/blogs/byme"
+                      ? "bg-violet-500 text-white px-3 py-1 rounded-full text-sm font-semibold"
+                      : ""
+                  }`}
                   prefetch={false}
                 >
                   My Blogs
@@ -92,21 +106,38 @@ const Navbar = ({ handleLogout }: any) => {
 export default Navbar;
 
 const Links = ({ handleLogout }: any) => {
+  const pathname = usePathname();
   return (
     <>
-      <Link href="/blogs" className="hover:text-violet-200" prefetch={false}>
+      <Link
+        href="/blogs"
+        className={`hover:text-violet-200 ${
+          pathname === "/blogs"
+            ? "bg-violet-500 text-white px-3 py-1 rounded-full text-sm font-semibold"
+            : ""
+        }`}
+        prefetch={false}
+      >
         Feed
       </Link>
       <Link
         href="/blogs/create"
-        className="hover:text-violet-200"
+        className={`hover:text-violet-200 ${
+          pathname === "/blogs/create"
+            ? "bg-violet-500 text-white px-3 py-1 rounded-full text-sm font-semibold"
+            : ""
+        }`}
         prefetch={false}
       >
         Create
       </Link>
       <Link
         href="/blogs/byme"
-        className="hover:text-violet-200"
+        className={`hover:text-violet-200 ${
+          pathname === "/blogs/byme"
+            ? "bg-violet-500 text-white px-3 py-1 rounded-full text-sm font-semibold"
+            : ""
+        }`}
         prefetch={false}
       >
         My Blogs
