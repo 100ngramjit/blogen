@@ -5,33 +5,27 @@ import { cn } from "@/lib/utils";
 
 interface CardProps extends HTMLMotionProps<"div"> {
   className?: string;
+  variant?: "default" | "static";
 }
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ className, ...props }, ref) => {
-    const [isHovered, setIsHovered] = React.useState(false);
-    const [isClicked, setIsClicked] = React.useState(false);
+  ({ className, variant = "default", ...props }, ref) => {
+    const baseProps = {
+      ref,
+      className: cn(
+        "rounded-lg border bg-card text-card-foreground shadow-2xl border-2 border-slate-600 dark:shadow-slate-600",
+        className
+      ),
+      initial: { rotateY: 0, z: 0 },
+      transition: { duration: 0.3 },
+      ...props,
+    };
 
-    return (
-      <motion.div
-        ref={ref}
-        className={cn(
-          "rounded-lg border bg-card text-card-foreground shadow-2xl border-2 border-slate-600 dark:shadow-slate-600",
-          className
-        )}
-        initial={{ rotateY: 0, z: 0 }}
-        animate={{
-          rotateY: isHovered ? 15 : 0,
-          z: isHovered ? 50 : 0,
-        }}
-        transition={{ duration: 0.3 }}
-        onHoverStart={() => setIsHovered(true)}
-        onHoverEnd={() => setIsHovered(false)}
-        onClick={() => setIsClicked(!isClicked)}
-        style={{ transformStyle: "preserve-3d" }}
-        {...props}
-      />
-    );
+    if (variant === "static") {
+      return <motion.div {...baseProps} />;
+    }
+
+    return <motion.div {...baseProps} whileHover={{ scale: 1.25 }} />;
   }
 );
 

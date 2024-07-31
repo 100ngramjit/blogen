@@ -31,7 +31,10 @@ async function fetchArticle(id: string, jwtToken: string) {
 
 function SkeletonLoader() {
   return (
-    <Card className="bg-background rounded-lg overflow-hidden shadow-md animate-pulse">
+    <Card
+      variant="static"
+      className="bg-background rounded-lg overflow-hidden shadow-md animate-pulse"
+    >
       <CardHeader>
         <div className="h-8 bg-gray-300 rounded w-1/2 mb-4"></div>
         <div className="h-4 bg-gray-300 rounded w-1/4 mb-2"></div>
@@ -68,7 +71,10 @@ async function ArticleContent({ id, session }: any) {
   const article = await fetchArticle(id, session.user.jwtToken);
 
   return (
-    <Card className="bg-background rounded-lg overflow-hidden shadow-2xl ">
+    <Card
+      variant="static"
+      className="bg-background rounded-lg overflow-hidden shadow-2xl "
+    >
       <CardHeader>
         <CardTitle className="flex items-top justify-between">
           <p className="lg:text-4xl md:text-3xl sm:text-2xl">{article.title}</p>
