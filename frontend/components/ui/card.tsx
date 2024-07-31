@@ -1,20 +1,40 @@
+"use client";
 import * as React from "react";
-
+import { motion, HTMLMotionProps } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-const Card = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      "rounded-lg border bg-card text-card-foreground shadow-2xl border-2 border-slate-600 dark:shadow-slate-600",
-      className
-    )}
-    {...props}
-  />
-));
+interface CardProps extends HTMLMotionProps<"div"> {
+  className?: string;
+}
+
+const Card = React.forwardRef<HTMLDivElement, CardProps>(
+  ({ className, ...props }, ref) => {
+    const [isHovered, setIsHovered] = React.useState(false);
+    const [isClicked, setIsClicked] = React.useState(false);
+
+    return (
+      <motion.div
+        ref={ref}
+        className={cn(
+          "rounded-lg border bg-card text-card-foreground shadow-2xl border-2 border-slate-600 dark:shadow-slate-600",
+          className
+        )}
+        initial={{ rotateY: 0, z: 0 }}
+        animate={{
+          rotateY: isClicked ? 180 : isHovered ? 15 : 0,
+          z: isHovered ? 50 : 0,
+        }}
+        transition={{ duration: 0.3 }}
+        onHoverStart={() => setIsHovered(true)}
+        onHoverEnd={() => setIsHovered(false)}
+        onClick={() => setIsClicked(!isClicked)}
+        style={{ transformStyle: "preserve-3d" }}
+        {...props}
+      />
+    );
+  }
+);
+
 Card.displayName = "Card";
 
 const CardHeader = React.forwardRef<
