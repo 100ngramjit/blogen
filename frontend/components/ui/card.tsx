@@ -21,7 +21,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
         )}
         initial={{ rotateY: 0, z: 0 }}
         animate={{
-          rotateY: isClicked ? 180 : isHovered ? 15 : 0,
+          rotateY: isHovered ? 15 : 0,
           z: isHovered ? 50 : 0,
         }}
         transition={{ duration: 0.3 }}
