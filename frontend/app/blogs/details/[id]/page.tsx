@@ -8,7 +8,7 @@ import BackButton from "@/app/_components/back-button";
 import { EditDialog } from "@/app/_components/edit-dialog";
 import { DeleteButton } from "@/app/_components/delete-button";
 import { ClockIcon } from "lucide-react";
-import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNowStrict } from "date-fns";
 import { ScrollProgressBar } from "@/app/_components/scroll-progress";
 
 async function fetchArticle(id: string, jwtToken: string) {
@@ -92,7 +92,7 @@ async function ArticleContent({ id, session }: any) {
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <ClockIcon className="w-4 h-4" />
           <span>
-            {formatDistanceToNow(new Date(article.createdAt), {
+            {formatDistanceToNowStrict(new Date(article.createdAt), {
               addSuffix: true,
             })}
           </span>
