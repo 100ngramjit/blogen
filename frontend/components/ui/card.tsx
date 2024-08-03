@@ -25,7 +25,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
       return <motion.div {...baseProps} />;
     }
 
-    return <motion.div {...baseProps} whileHover={{ scale: 1.25 }} />;
+    return <motion.div {...baseProps} whileHover={{ scale: 1.1 }} />;
   }
 );
 

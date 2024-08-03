@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import axios from "axios";
+import { formatDistanceToNow } from "date-fns";
 import { ClockIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -124,7 +125,9 @@ const BlogCards = ({ session, blogtype }: any) => {
               className="flex items-center gap-2 text-muted-foreground"
             >
               <ClockIcon className="w-4 h-4" />
-              {new Date(ele.createdAt).toLocaleString()}
+              {formatDistanceToNow(new Date(ele.createdAt), {
+                addSuffix: true,
+              })}
             </Badge>
           </CardFooter>
         </Card>
