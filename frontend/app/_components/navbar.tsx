@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -12,8 +13,10 @@ import { AlignJustify, Feather, LogOut } from "lucide-react";
 import Link from "next/link";
 import { ModeToggle } from "./theme-toggle";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const Navbar = ({ handleLogout }: any) => {
+  const { data: session } = useSession();
   const pathname = usePathname();
   return (
     <header className="bg-violet-600 text-white rounded-b-3xl bg-gradient-to-r from-[#6533EA] to-[#A233EA] text-white fixed w-full z-50">
@@ -45,6 +48,9 @@ const Navbar = ({ handleLogout }: any) => {
               <VisuallyHidden.Root>Menu</VisuallyHidden.Root>
             </SheetTitle>
             <div className="grid gap-6 p-4">
+              <span className="text-sm font-semibold">
+                Welcome, {session?.user?.name}
+              </span>
               <SheetClose asChild>
                 <Link
                   href="/blogs"
@@ -107,8 +113,12 @@ export default Navbar;
 
 const Links = ({ handleLogout }: any) => {
   const pathname = usePathname();
+  const { data: session } = useSession();
   return (
     <>
+      <span className="text-sm font-semibold">
+        Welcome, {session?.user?.name}
+      </span>
       <Link
         href="/blogs"
         className={`hover:text-violet-200 ${
