@@ -19,8 +19,8 @@ const Navbar = ({ handleLogout }: any) => {
   const { data: session } = useSession();
   const pathname = usePathname();
   return (
-    <header className="bg-violet-600 text-white rounded-b-3xl bg-gradient-to-r from-[#6533EA] to-[#A233EA] text-white fixed w-full z-50">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
+    <header className="bg-violet-600 text-white rounded-3xl bg-gradient-to-r from-[#6533EA] to-[#A233EA] fixed w-[96vw] sm:w-[98vw] lg:w-[99vw] z-50 top-0 left-0 m-2">
+      <div className="container mx-auto flex h-16 items-center justify-between px-2 md:px-6">
         <Link
           href="/blogs"
           className="flex items-center gap-2 text-lg font-bold"
@@ -56,7 +56,7 @@ const Navbar = ({ handleLogout }: any) => {
                   href="/blogs"
                   className={`hover:text-violet-200 ${
                     pathname === "/blogs"
-                      ? "bg-violet-500 text-white px-3 py-1 rounded-full text-sm font-semibold"
+                      ? "bg-violet-500 text-white px-3 py-1 rounded-full text-md font-bold"
                       : ""
                   }`}
                   prefetch={false}
@@ -69,7 +69,7 @@ const Navbar = ({ handleLogout }: any) => {
                   href="/blogs/create"
                   className={`hover:text-violet-200 ${
                     pathname === "/blogs/create"
-                      ? "bg-violet-500 text-white px-3 py-1 rounded-full text-sm font-semibold"
+                      ? "bg-violet-500 text-white px-3 py-1 rounded-full text-md font-bold"
                       : ""
                   }`}
                   prefetch={false}
@@ -82,7 +82,7 @@ const Navbar = ({ handleLogout }: any) => {
                   href="/blogs/byme"
                   className={`hover:text-violet-200 ${
                     pathname === "/blogs/byme"
-                      ? "bg-violet-500 text-white px-3 py-1 rounded-full text-sm font-semibold"
+                      ? "bg-violet-500 text-white px-3 py-1 rounded-full text-md font-bold"
                       : ""
                   }`}
                   prefetch={false}
@@ -123,7 +123,7 @@ const Links = ({ handleLogout }: any) => {
         href="/blogs"
         className={`hover:text-violet-200 ${
           pathname === "/blogs"
-            ? "bg-violet-500 text-white px-3 py-1 rounded-full text-sm font-semibold"
+            ? "bg-violet-500 text-white px-3 py-1 rounded-full text-md font-bold"
             : ""
         }`}
         prefetch={false}
@@ -134,7 +134,7 @@ const Links = ({ handleLogout }: any) => {
         href="/blogs/create"
         className={`hover:text-violet-200 ${
           pathname === "/blogs/create"
-            ? "bg-violet-500 text-white px-3 py-1 rounded-full text-sm font-semibold"
+            ? "bg-violet-500 text-white px-3 py-1 rounded-full text-md font-bold"
             : ""
         }`}
         prefetch={false}
@@ -145,7 +145,7 @@ const Links = ({ handleLogout }: any) => {
         href="/blogs/byme"
         className={`hover:text-violet-200 ${
           pathname === "/blogs/byme"
-            ? "bg-violet-500 text-white px-3 py-1 rounded-full text-sm font-semibold"
+            ? "bg-violet-500 text-white px-3 py-1 rounded-full text-md font-bold"
             : ""
         }`}
         prefetch={false}
@@ -166,5 +166,3 @@ const Links = ({ handleLogout }: any) => {
     </>
   );
 };
-
-//TODO: Password Hashing
