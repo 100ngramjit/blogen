@@ -25,6 +25,15 @@ const Page = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!title.trim() || !content.trim()) {
+      toast({
+        title: "Please fill in the title and content",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsLoading(true);
     try {
       const response = await fetch("/api/blogs/create", {
@@ -44,7 +53,7 @@ const Page = () => {
         router.push("/blogs");
       } else {
         toast({
-          title: "server error! please try again",
+          title: "Server error! Please try again",
           variant: "destructive",
         });
         console.error("Failed to create blog post");
@@ -52,7 +61,7 @@ const Page = () => {
       }
     } catch (error) {
       toast({
-        title: "server error! please try again",
+        title: "Server error! Please try again",
         variant: "destructive",
       });
       console.error("An error occurred:", error);
@@ -62,13 +71,13 @@ const Page = () => {
 
   return (
     <main className="flex-1">
-      <section className="flex min-h-[calc(100dvh-80px)] items-center justify-center bg-background px-4 py-4 md:px-6">
-        <div className="container mx-auto max-w-md space-y-6 text-center">
+      <section className="flex min-h-[calc(100dvh-80px)] items-center justify-center bg-background px-4 md:px-6">
+        <div className="container mx-auto max-w-2xl space-y-6 text-center">
           <div className="space-y-2">
-            <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
+            <h1 className="text-3xl font-bold text-primary tracking-tighter sm:text-5xl md:text-6xl">
               Create a New Blog
             </h1>
-            <p className="text-muted-foreground md:text-xl">
+            <p className="text-muted-foreground text-md md:text-xl">
               Jot down your thoughts, insights, and stories .
             </p>
           </div>
@@ -92,7 +101,11 @@ const Page = () => {
                 onChange={handleContentChange}
               />
             </div>
-            <LoaderButton type="submit" isLoading={isLoading}>
+            <LoaderButton
+              type="submit"
+              isLoading={isLoading}
+              disabled={!title.trim() || !content.trim()}
+            >
               Publish
               <span>
                 <Send className="h-4 w-4 mx-2" />
