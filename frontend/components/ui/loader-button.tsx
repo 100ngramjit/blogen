@@ -12,7 +12,6 @@ export const LoaderButton = React.forwardRef<
   HTMLButtonElement,
   LoaderButtonProps
 >(({ isLoading, icon: Icon, children, disabled = false }, ref) => {
-  console.log(disabled);
   if (isLoading) {
     return (
       <Button ref={ref} disabled={isLoading} className="w-full">
