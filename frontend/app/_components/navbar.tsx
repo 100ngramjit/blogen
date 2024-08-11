@@ -20,7 +20,7 @@ const Navbar = ({ handleLogout }: any) => {
   const pathname = usePathname();
   return (
     <header className="bg-violet-600 text-white rounded-lg bg-gradient-to-r from-[#6533EA] to-[#A233EA] fixed w-[96vw] sm:w-[98vw] lg:w-[99vw] z-50 top-0 left-0 m-2">
-      <div className="container mx-auto flex h-16 items-center justify-between px-2 md:px-6">
+      <div className="mx-auto flex h-16 items-center justify-between px-2 md:px-6">
         <Link
           href="/blogs"
           className="flex items-center gap-2 text-lg font-bold"

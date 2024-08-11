@@ -72,7 +72,7 @@ const Page = () => {
   return (
     <main className="flex-1">
       <section className="flex min-h-[calc(100dvh-80px)] items-center justify-center bg-background px-4 md:px-6">
-        <div className="container mx-auto max-w-2xl space-y-6 text-center">
+        <div className=" mx-auto max-w-2xl space-y-6 text-center">
           <div className="space-y-2">
             <h1 className="text-3xl font-bold text-primary tracking-tighter sm:text-5xl md:text-6xl">
               Create a New Blog

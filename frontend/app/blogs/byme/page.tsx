@@ -6,7 +6,7 @@ const Page = async () => {
   const session = await getServerSession(NEXT_AUTH_CONFIG);
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className=" mx-auto px-4 py-8">
       <div className="flex flex-col gap-4 text-center pb-8">
         <p className="text-lg">Quick glance</p>
         <h1 className="text-4xl md:text-6xl lg:text-8xl font-extrabold">

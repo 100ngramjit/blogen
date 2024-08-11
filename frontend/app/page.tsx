@@ -15,7 +15,7 @@ export default function Home() {
   if (status === "unauthenticated") {
     return (
       <div className="flex min-h-[100dvh] flex-col items-center justify-center bg-background px-4 py-12 md:px-6">
-        <div className="container mx-auto max-w-md space-y-6 text-center">
+        <div className=" mx-auto max-w-md space-y-6 text-center">
           <div className="space-y-2">
             <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
               Blogen .

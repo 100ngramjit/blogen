@@ -117,7 +117,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   return (
     <>
       <ScrollProgressBar />
-      <div className="container mx-auto px-4 py-4">
+      <div className=" mx-auto px-4 py-4">
         <BackButton />
         <Suspense fallback={<SkeletonLoader />}>
           <ArticleContent id={id} session={session} />
