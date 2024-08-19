@@ -26,7 +26,7 @@ const Navbar = ({ handleLogout }: any) => {
           className="flex items-center gap-2 text-lg font-bold"
           prefetch={false}
         >
-          <Feather className="h-6 w-6" />
+          <Feather className="h-5 w-5" />
           <span>Blogen</span>
         </Link>
         <nav className="hidden items-center gap-6 md:flex">
@@ -43,13 +43,13 @@ const Navbar = ({ handleLogout }: any) => {
               <span className="sr-only">Toggle navigation</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="right" className="bg-violet-600 text-white">
+          <SheetContent side="right" className="bg-violet-600 text-white w-1/2">
             <SheetTitle className="px-4 text-sm ">
               <VisuallyHidden.Root>Menu</VisuallyHidden.Root>
             </SheetTitle>
             <div className="grid gap-6 p-4">
               <span className="text-sm font-semibold">
-                Welcome, {session?.user?.name}
+                Welcome, {session?.user?.name?.split(" ")[0]}
               </span>
               <SheetClose asChild>
                 <Link
@@ -117,7 +117,7 @@ const Links = ({ handleLogout }: any) => {
   return (
     <>
       <span className="text-sm font-semibold">
-        Welcome, {session?.user?.name}
+        Welcome, {session?.user?.name?.split(" ")[0]}
       </span>
       <Link
         href="/blogs"
