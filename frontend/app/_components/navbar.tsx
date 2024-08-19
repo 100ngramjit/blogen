@@ -116,9 +116,11 @@ const Links = ({ handleLogout }: any) => {
   const { data: session } = useSession();
   return (
     <>
-      <span className="text-sm font-semibold">
-        Welcome, {session?.user?.name?.split(" ")[0]}
-      </span>
+      {session?.user && (
+        <span className="text-sm font-semibold">
+          Welcome, {session?.user?.name?.split(" ")[0]}
+        </span>
+      )}
       <Link
         href="/blogs"
         className={`hover:text-violet-200 ${
