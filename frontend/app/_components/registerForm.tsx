@@ -22,6 +22,8 @@ export default function RegisterForm({ handleSubmit, isLoading }: any) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [passwordError, setPasswordError] = useState("");
+  const [emailError, setEmailError] = useState("");
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -29,10 +31,12 @@ export default function RegisterForm({ handleSubmit, isLoading }: any) {
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
+    validateEmail(e.target.value);
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
+    validatePassword(e.target.value);
   };
 
   const handleConfirmPasswordChange = (
@@ -44,8 +48,52 @@ export default function RegisterForm({ handleSubmit, isLoading }: any) {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
   const toggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword(!showConfirmPassword);
+  };
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setEmailError("Please enter a valid email address");
+    } else {
+      setEmailError("");
+    }
+  };
+
+  const validatePassword = (password: string) => {
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    if (password.length < minLength) {
+      setPasswordError("Password must be at least 8 characters long");
+    } else if (!hasUpperCase) {
+      setPasswordError("Password must contain at least one uppercase letter");
+    } else if (!hasLowerCase) {
+      setPasswordError("Password must contain at least one lowercase letter");
+    } else if (!hasNumber) {
+      setPasswordError("Password must contain at least one number");
+    } else if (!hasSpecialChar) {
+      setPasswordError("Password must contain at least one special character");
+    } else {
+      setPasswordError("");
+    }
+  };
+
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (emailError || passwordError) {
+      return;
+    }
+    if (password !== confirmPassword) {
+      setPasswordError("Passwords do not match");
+      return;
+    }
+    handleSubmit(e, email, password, confirmPassword, name);
   };
 
   return (
@@ -68,12 +116,7 @@ export default function RegisterForm({ handleSubmit, isLoading }: any) {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form
-              className="space-y-6"
-              onSubmit={(e) =>
-                handleSubmit(e, email, password, confirmPassword, name)
-              }
-            >
+            <form className="space-y-6" onSubmit={handleFormSubmit}>
               <div>
                 <Label htmlFor="name" className="my-2">
                   Name
@@ -101,6 +144,9 @@ export default function RegisterForm({ handleSubmit, isLoading }: any) {
                   value={email}
                   onChange={handleEmailChange}
                 />
+                {emailError && (
+                  <p className="text-sm text-red-500 mt-1">{emailError}</p>
+                )}
               </div>
               <div>
                 <div className="flex items-center justify-between">
@@ -127,6 +173,9 @@ export default function RegisterForm({ handleSubmit, isLoading }: any) {
                     {showPassword ? <EyeOff /> : <Eye />}
                   </Button>
                 </div>
+                {passwordError && (
+                  <p className="text-sm text-red-500 mt-1">{passwordError}</p>
+                )}
               </div>
               <div>
                 <div className="flex items-center justify-between">
