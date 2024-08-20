@@ -13,7 +13,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
     const baseProps = {
       ref,
       className: cn(
-        "rounded-lg border bg-card text-card-foreground shadow-2xl border-2 border-slate-600 dark:shadow-slate-600",
+        "rounded-lg border bg-card text-card-foreground shadow-2xl border-2 border-slate-700 dark:border-slate-300 dark:shadow-slate-800",
         className
       ),
       initial: { rotateY: 0, z: 0 },
