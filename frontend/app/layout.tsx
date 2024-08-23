@@ -10,6 +10,7 @@ const inter = Karla({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Blogen",
   description: "get blogen",
+  metadataBase: new URL("https://blogen-iota.vercel.app"),
 };
 
 export default function RootLayout({
