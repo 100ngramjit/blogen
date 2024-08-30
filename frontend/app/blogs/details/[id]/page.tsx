@@ -10,6 +10,7 @@ import { DeleteButton } from "@/app/_components/delete-button";
 import { ClockIcon } from "lucide-react";
 import { formatDistanceToNowStrict } from "date-fns";
 import { ScrollProgressBar } from "@/app/_components/scroll-progress";
+import Breadcrumb from "@/app/_components/breadcrumbs";
 
 async function fetchArticle(id: string, jwtToken: string) {
   const headersList = {
@@ -118,7 +119,9 @@ export default async function Page({ params }: { params: { id: string } }) {
     <>
       <ScrollProgressBar />
       <div className=" mx-auto px-4 py-4">
-        <BackButton />
+        {/* <BackButton /> */}
+        <Breadcrumb />
+
         <Suspense fallback={<SkeletonLoader />}>
           <ArticleContent id={id} session={session} />
         </Suspense>

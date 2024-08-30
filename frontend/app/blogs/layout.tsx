@@ -1,4 +1,5 @@
 "use client";
+import Breadcrumb from "../_components/breadcrumbs";
 import Navbar from "../_components/navbar";
 import { signOut } from "next-auth/react";
 

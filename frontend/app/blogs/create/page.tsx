@@ -7,6 +7,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { LoaderButton } from "@/components/ui/loader-button";
 import { useRouter } from "next/navigation";
 import { Send } from "lucide-react";
+import Breadcrumb from "@/app/_components/breadcrumbs";
 
 const Page = () => {
   const router = useRouter();
@@ -73,6 +74,8 @@ const Page = () => {
     <main className="flex-1">
       <section className="flex min-h-[calc(100dvh-80px)] items-center justify-center bg-background px-4 md:px-6">
         <div className=" mx-auto max-w-2xl space-y-6 text-center">
+          <Breadcrumb />
+
           <div className="space-y-2">
             <h1 className="text-3xl font-bold text-primary tracking-tighter sm:text-5xl md:text-6xl">
               Create a New Blog
