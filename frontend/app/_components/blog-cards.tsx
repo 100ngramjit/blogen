@@ -109,7 +109,9 @@ const BlogCards = ({ session, blogtype }: any) => {
           onClick={() => router.push(`/blogs/details/${ele.id}`)}
         >
           <CardHeader>
-            <CardTitle className="text-2xl font-bold">{ele.title}</CardTitle>
+            <CardTitle className="text-2xl font-bold hover:underline">
+              {ele.title}
+            </CardTitle>
           </CardHeader>
           <CardContent className="flex-grow text-muted-foreground">
             <p className="text-muted-foreground line-clamp-3">{ele.content}</p>

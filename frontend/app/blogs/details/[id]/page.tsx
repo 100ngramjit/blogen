@@ -4,7 +4,6 @@ import { CardHeader, CardTitle, CardContent, Card } from "@/components/ui/card";
 import { NEXT_AUTH_CONFIG } from "@/lib/authconfig";
 import { getServerSession } from "next-auth";
 import { signOut } from "next-auth/react";
-import BackButton from "@/app/_components/back-button";
 import { EditDialog } from "@/app/_components/edit-dialog";
 import { DeleteButton } from "@/app/_components/delete-button";
 import { ClockIcon } from "lucide-react";
@@ -120,7 +119,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       <ScrollProgressBar />
       <div className=" mx-auto px-4 py-4">
         {/* <BackButton /> */}
-        <Breadcrumb />
+        {/* <Breadcrumb /> */}
 
         <Suspense fallback={<SkeletonLoader />}>
           <ArticleContent id={id} session={session} />
