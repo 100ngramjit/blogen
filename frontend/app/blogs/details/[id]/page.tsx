@@ -20,7 +20,7 @@ async function fetchArticle(id: string, jwtToken: string) {
   };
 
   const reqOptions = {
-    url: `https://my-app.blogen.workers.dev/api/article/details/${id}`,
+    url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/article/details/${id}`,
     method: "GET",
     headers: headersList,
     timeout: 5000,

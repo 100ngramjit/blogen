@@ -14,7 +14,7 @@ articleRouter.use("/*", async (c, next) => {
       c.status(403);
       return c.json({ err: "Invalid token" });
     }
-    const isUserVerified = await verify(token.split(" ")[1], c.env.JWT_SECRET);
+    const isUserVerified = await verify(token.split(" ")[1], c.env.JWT_SECRET, "HS256");
     if (isUserVerified) {
       c.set("userId", isUserVerified.id as string);
       await next();

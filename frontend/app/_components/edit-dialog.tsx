@@ -51,7 +51,7 @@ export function EditDialog({ article, id, session }: any) {
         content: content,
       });
       const reqOptions = {
-        url: `https://my-app.blogen.workers.dev/api/article/${id}`,
+        url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/article/${id}`,
         method: "PUT",
         headers: headersList,
         data: bodyContent,

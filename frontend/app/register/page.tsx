@@ -36,7 +36,7 @@ export default function Page() {
       });
 
       let reqOptions = {
-        url: "https://my-app.blogen.workers.dev/api/user/signup",
+        url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user/signup`,
         method: "POST",
         data: bodyContent,
       };

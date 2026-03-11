@@ -34,7 +34,7 @@ export function DeleteButton({ session, id }: any) {
         "Content-Type": "application/json",
       };
       const reqOptions = {
-        url: `https://my-app.blogen.workers.dev/api/article/${id}`,
+        url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/article/${id}`,
         method: "DELETE",
         headers: headersList,
       };

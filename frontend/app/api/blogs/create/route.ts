@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
     let bodyContent = JSON.stringify(body);
 
     let reqOptions = {
-      url: "https://my-app.blogen.workers.dev/api/article",
+      url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/article`,
       method: "POST",
       headers: headersList,
       data: bodyContent,

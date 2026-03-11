@@ -30,7 +30,7 @@ export const NEXT_AUTH_CONFIG = {
         if (!credentials) return null;
 
         const res = await fetch(
-          "https://my-app.blogen.workers.dev/api/user/signin",
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user/signin`,
           {
             method: "POST",
             body: JSON.stringify({

@@ -52,7 +52,7 @@ const BlogCards = ({ session, blogtype }: any) => {
       };
 
       let reqOptions = {
-        url: `https://my-app.blogen.workers.dev/api/article/${blogtype}`,
+        url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/article/${blogtype}`,
         method: "GET",
         headers: headersList,
       };
