@@ -1,5 +1,7 @@
-import { PrismaClient } from "@prisma/client/edge";
-import { withAccelerate } from "@prisma/extension-accelerate";
+import { PrismaClient } from "@prisma/client";
+import { Pool } from "pg";
+import { PrismaPg } from "@prisma/adapter-pg";
+
 import { Hono } from "hono";
 import { sign } from "hono/jwt";
 import { envVars } from "../types";
@@ -8,9 +10,9 @@ import bcrypt from "bcryptjs";
 export const userRouter = new Hono<envVars>();
 
 userRouter.post("/signup", async (c) => {
-  const prisma = new PrismaClient({
-    datasourceUrl: c.env.DATABASE_URL,
-  }).$extends(withAccelerate());
+  const pool = new Pool({ connectionString: c.env.DATABASE_URL });
+  const adapter = new PrismaPg(pool);
+  const prisma = new PrismaClient({ adapter });
   try {
     const body = await c.req.json();
     // Hash the password before storing it
@@ -38,9 +40,9 @@ userRouter.post("/signup", async (c) => {
 });
 
 userRouter.post("/signin", async (c) => {
-  const prisma = new PrismaClient({
-    datasourceUrl: c.env.DATABASE_URL,
-  }).$extends(withAccelerate());
+  const pool = new Pool({ connectionString: c.env.DATABASE_URL });
+  const adapter = new PrismaPg(pool);
+  const prisma = new PrismaClient({ adapter });
   const body = await c.req.json();
   try {
     console.log(body);
@@ -65,8 +67,9 @@ userRouter.post("/signin", async (c) => {
       }
     }
     return c.json({ msg: "The email or password provided is wrong" });
-  } catch (e) {
+  } catch (e: any) {
     c.status(403);
-    return c.json({ err: e });
+    console.error("Prisma Error Details", e.message || e);
+    return c.json({ err: e, message: e?.message });
   }
 });

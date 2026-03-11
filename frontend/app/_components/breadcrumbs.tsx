@@ -28,7 +28,7 @@ const Breadcrumb: React.FC = () => {
         <React.Fragment key={item.href}>
           <Link
             href={item.href}
-            className={`hover:text-violet-900 ${
+            className={`hover:text-yellow-600 ${
               index === breadcrumbItems.length - 1
                 ? "font-semibold text-primary"
                 : ""

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Karla } from "next/font/google";
+import { Merriweather, Nunito, Poppins } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { Providers } from "./providers";
 import { ThemeProvider } from "@/components/theme-provider";
 
-const inter = Karla({ subsets: ["latin"] });
+const inter = Nunito({ subsets: ["latin"], weight: ["600"] });
 
 export const metadata: Metadata = {
   title: "Blogen",

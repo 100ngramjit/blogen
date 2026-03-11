@@ -72,36 +72,57 @@ async function ArticleContent({ id, session }: any) {
   const article = await fetchArticle(id, session.user.jwtToken);
 
   return (
-    <Card
-      variant="static"
-      className="bg-background rounded-lg overflow-hidden shadow-2xl "
-    >
-      <CardHeader>
-        <CardTitle className="flex items-top justify-between">
-          <p className="lg:text-4xl md:text-3xl sm:text-2xl">{article.title}</p>
+    <div className="animate-slide-up">
+      <Card
+        variant="static"
+        className="bg-white/80 dark:bg-black/40 backdrop-blur-xl rounded-[2.5rem] border border-gray-200 dark:border-white/10 shadow-2xl overflow-hidden"
+      >
+        <CardHeader className="p-8 pb-2">
+          <div>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-primary drop-shadow-sm leading-tight">
+              {article.title}
+            </h1>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-6 mt-6">
+            <div className="flex items-center gap-3 bg-primary/10 px-4 py-2 rounded-full border border-primary/20">
+              <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-black text-xs">
+                {article?.author.name?.charAt(0)}
+              </div>
+              <span className="text-sm font-bold tracking-wide uppercase">
+                {article?.author.name}
+              </span>
+            </div>
+
+            <div className="flex items-center gap-2 text-sm text-muted-foreground font-medium bg-black/5 dark:bg-white/5 px-4 py-2 rounded-full">
+              <ClockIcon className="w-4 h-4 text-primary" />
+              <span>
+                {formatDistanceToNowStrict(new Date(article.createdAt), {
+                  addSuffix: true,
+                })}
+              </span>
+            </div>
+          </div>
+
           {article.author.email === session?.user.email && (
-            <div className="flex justify-start">
+            <div className="flex gap-2 bg-black/5 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/5 shadow-sm w-fit mt-4">
               <EditDialog article={article} id={id} session={session} />
               <DeleteButton session={session} id={id} />
             </div>
           )}
-        </CardTitle>
-        <div className="flex items-center text-muted-foreground text-sm mb-4">
-          by<span className="px-1">{article?.author.name}</span>
+        </CardHeader>
+
+        <div className="px-8 md:px-12 my-2">
+          <div className="h-px bg-gradient-to-r from-transparent via-gray-200 dark:via-white/10 to-transparent" />
         </div>
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <ClockIcon className="w-4 h-4" />
-          <span>
-            {formatDistanceToNowStrict(new Date(article.createdAt), {
-              addSuffix: true,
-            })}
-          </span>
-        </div>
-      </CardHeader>
-      <CardContent>
-        <p className="whitespace-pre-wrap">{article.content}</p>
-      </CardContent>
-    </Card>
+
+        <CardContent className="p-8 md:p-12 pt-0">
+          <p className="whitespace-pre-wrap text-lg md:text-xl leading-relaxed font-medium opacity-90 first-letter:text-5xl first-letter:font-black first-letter:mr-3 first-letter:float-left first-letter:text-primary">
+            {article.content}
+          </p>
+        </CardContent>
+      </Card>
+    </div>
   );
 }
 

@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 
 function CardSkeleton() {
   return (
-    <Card className="flex flex-col rounded-lg shadow-md animate-pulse">
+    <Card className="flex flex-col rounded-lg shadow-md animate-pulse border-primary/20">
       <CardHeader>
         <div className="h-8 bg-gray-300 rounded w-3/4"></div>
       </CardHeader>
@@ -104,19 +104,20 @@ const BlogCards = ({ session, blogtype }: any) => {
     <>
       {blogs.posts.map((ele: any) => (
         <Card
-          className="flex flex-col rounded-lg shadow-2xl dark:shadow-lg cursor-pointer"
+          className="relative group overflow-hidden flex flex-col rounded-lg shadow-xl hover:shadow-2xl dark:shadow-lg cursor-pointer border-primary/20 transition-all duration-300"
           key={ele?.id}
           onClick={() => router.push(`/blogs/details/${ele.id}`)}
         >
-          <CardHeader>
-            <CardTitle className="text-2xl font-bold hover:underline">
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/15 to-transparent opacity-0 -translate-x-full group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 ease-out pointer-events-none z-0" />
+          <CardHeader className="relative z-10">
+            <CardTitle className="text-2xl font-bold hover:underline hover:text-primary">
               {ele.title}
             </CardTitle>
           </CardHeader>
-          <CardContent className="flex-grow text-muted-foreground">
+          <CardContent className="relative z-10 flex-grow text-muted-foreground">
             <p className="text-muted-foreground line-clamp-3">{ele.content}</p>
           </CardContent>
-          <CardFooter className="flex items-center justify-between text-sm mt-auto">
+          <CardFooter className="relative z-10 flex items-center justify-between text-sm mt-auto">
             <div>
               <Badge variant="secondary" className="font-medium">
                 {ele.author.name}

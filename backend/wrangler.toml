@@ -1,8 +1,9 @@
 name = "my-app"
-compatibility_date = "2023-12-01"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
 
 [vars]
-DATABASE_URL="prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiYjk3OTZhYmItYmI5Yi00MTk2LTgyNGUtYjBjODk2YjkxMWJlIiwidGVuYW50X2lkIjoiYjJiYmJmMTVmNTM3OTAyNWE0ZTg0NDRjM2Q5YWY1OTc4MjFmZjg4NzM4MWUzMWM2MWIwNDIxOGQzNTNhYmFlNyIsImludGVybmFsX3NlY3JldCI6ImFiYzQxNGM4LWY1MmUtNDc1Mi1iMWQ3LTczNzIwNjljYWNiYSJ9.iTEJ4WjhCqhQjNIN6kHW6lbynRJSikgUq9diRyX4dDs"
+DATABASE_URL="postgres://postgres.jpvkhxwwtjwyjykzmenn:Fn8J2et+r@28Y~h@aws-0-ap-south-1.pooler.supabase.com:6543/postgres?pgbouncer=true"
 
  JWT_SECRET="testDBsecret"
 
