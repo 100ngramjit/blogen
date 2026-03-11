@@ -1,11 +1,18 @@
-import { PrismaClient } from "@prisma/client";
-import { Pool } from "pg";
-import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from "@prisma/client/edge";
+import { withAccelerate } from "@prisma/extension-accelerate";
 import { Hono } from "hono";
 import { envVars } from "../types";
 import { verify } from "hono/jwt";
 
 export const articleRouter = new Hono<envVars>();
+
+const createPrismaClient = (connectionString: string) => {
+  if (!connectionString) throw new Error("Missing DATABASE_URL");
+
+  return new PrismaClient({
+    accelerateUrl: connectionString,
+  }).$extends(withAccelerate());
+};
 
 articleRouter.use("/*", async (c, next) => {
   try {
@@ -30,9 +37,7 @@ articleRouter.use("/*", async (c, next) => {
 
 articleRouter.post("/", async (c) => {
   const authorId = c.get("userId");
-  const pool = new Pool({ connectionString: c.env.DATABASE_URL });
-  const adapter = new PrismaPg(pool);
-  const prisma = new PrismaClient({ adapter });
+  const prisma = createPrismaClient(c.env.DATABASE_URL);
   try {
     const body = await c.req.json();
     const post = await prisma.post.create({
@@ -50,9 +55,7 @@ articleRouter.post("/", async (c) => {
 });
 
 articleRouter.put("/:id", async (c) => {
-  const pool = new Pool({ connectionString: c.env.DATABASE_URL });
-  const adapter = new PrismaPg(pool);
-  const prisma = new PrismaClient({ adapter });
+  const prisma = createPrismaClient(c.env.DATABASE_URL);
 
   try {
     const id = c.req.param("id");
@@ -76,9 +79,7 @@ articleRouter.put("/:id", async (c) => {
 });
 
 articleRouter.get("/details/:id", async (c) => {
-  const pool = new Pool({ connectionString: c.env.DATABASE_URL });
-  const adapter = new PrismaPg(pool);
-  const prisma = new PrismaClient({ adapter });
+  const prisma = createPrismaClient(c.env.DATABASE_URL);
   try {
     const id = c.req.param("id");
     const post = await prisma.post.findFirst({
@@ -105,9 +106,7 @@ articleRouter.get("/details/:id", async (c) => {
 });
 
 articleRouter.delete("/:id", async (c) => {
-  const pool = new Pool({ connectionString: c.env.DATABASE_URL });
-  const adapter = new PrismaPg(pool);
-  const prisma = new PrismaClient({ adapter });
+  const prisma = createPrismaClient(c.env.DATABASE_URL);
   try {
     const id = c.req.param("id");
     const post = await prisma.post.delete({
@@ -123,9 +122,7 @@ articleRouter.delete("/:id", async (c) => {
 });
 
 articleRouter.get("/all", async (c) => {
-  const pool = new Pool({ connectionString: c.env.DATABASE_URL });
-  const adapter = new PrismaPg(pool);
-  const prisma = new PrismaClient({ adapter });
+  const prisma = createPrismaClient(c.env.DATABASE_URL);
   try {
     const authorId = c.get("userId");
     const posts = await prisma.post.findMany({
@@ -148,9 +145,7 @@ articleRouter.get("/all", async (c) => {
 });
 
 articleRouter.get("/latest", async (c) => {
-  const pool = new Pool({ connectionString: c.env.DATABASE_URL });
-  const adapter = new PrismaPg(pool);
-  const prisma = new PrismaClient({ adapter });
+  const prisma = createPrismaClient(c.env.DATABASE_URL);
   try {
     const latestPosts = await prisma.post.findMany({
       orderBy: {

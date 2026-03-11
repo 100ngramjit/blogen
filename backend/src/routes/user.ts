@@ -1,6 +1,5 @@
-import { PrismaClient } from "@prisma/client";
-import { Pool } from "pg";
-import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from "@prisma/client/edge";
+import { withAccelerate } from "@prisma/extension-accelerate";
 
 import { Hono } from "hono";
 import { sign } from "hono/jwt";
@@ -9,10 +8,16 @@ import bcrypt from "bcryptjs";
 
 export const userRouter = new Hono<envVars>();
 
+const createPrismaClient = (connectionString: string) => {
+  if (!connectionString) throw new Error("Missing DATABASE_URL");
+
+  return new PrismaClient({
+    accelerateUrl: connectionString,
+  }).$extends(withAccelerate());
+};
+
 userRouter.post("/signup", async (c) => {
-  const pool = new Pool({ connectionString: c.env.DATABASE_URL });
-  const adapter = new PrismaPg(pool);
-  const prisma = new PrismaClient({ adapter });
+  const prisma = createPrismaClient(c.env.DATABASE_URL);
   try {
     const body = await c.req.json();
     // Hash the password before storing it
@@ -33,25 +38,24 @@ userRouter.post("/signup", async (c) => {
       token,
       name: body.name,
     });
-  } catch (e) {
+  } catch (e: any) {
     c.status(403);
-    return c.json({ err: e });
+    console.error("Signup Error:", e.message || e);
+    return c.json({ err: e, message: e?.message });
   }
 });
 
 userRouter.post("/signin", async (c) => {
-  const pool = new Pool({ connectionString: c.env.DATABASE_URL });
-  const adapter = new PrismaPg(pool);
-  const prisma = new PrismaClient({ adapter });
+  const prisma = createPrismaClient(c.env.DATABASE_URL);
   const body = await c.req.json();
   try {
-    console.log(body);
+    console.log({ email: body.email });
     const user = await prisma.user.findUnique({
       where: {
         email: body.email,
       },
     });
-    console.log(user);
+
     if (user) {
       // Compare the provided password with the stored hashed password
       const passwordMatch = await bcrypt.compare(body.password, user.password);
@@ -66,10 +70,11 @@ userRouter.post("/signin", async (c) => {
         return c.json({ token: jwtResponse, name: user.name });
       }
     }
+    c.status(401);
     return c.json({ msg: "The email or password provided is wrong" });
   } catch (e: any) {
     c.status(403);
-    console.error("Prisma Error Details", e.message || e);
+    console.error("Signin Error:", e.message || e);
     return c.json({ err: e, message: e?.message });
   }
 });
