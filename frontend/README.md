@@ -2,7 +2,37 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+### 1. Install Dependencies
+
+First, install the required packages:
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+# or
+bun install
+```
+
+### 2. Environment Variables
+
+Create a `.env` file in the root of the `frontend` directory and add the following variables:
+
+```env
+NEXTAUTH_SECRET=password_nextauth
+NEXTAUTH_URL=http://localhost:3000
+NEXT_PUBLIC_BACKEND_URL=http://localhost:8787
+```
+
+- `NEXTAUTH_SECRET`: Secret key used by NextAuth for encrypting tokens.
+- `NEXTAUTH_URL`: The base URL of your frontend application.
+- `NEXT_PUBLIC_BACKEND_URL`: The URL of your backend API.
+
+### 3. Run the Development Server
+
+Start the development server:
 
 ```bash
 npm run dev
