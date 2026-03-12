@@ -6,10 +6,12 @@ import { getServerSession } from "next-auth";
 import { signOut } from "next-auth/react";
 import { EditDialog } from "@/app/_components/edit-dialog";
 import { DeleteButton } from "@/app/_components/delete-button";
-import { ClockIcon } from "lucide-react";
+import { ClockIcon, UserIcon, BookOpenIcon, ArrowLeftIcon } from "lucide-react";
 import { formatDistanceToNowStrict } from "date-fns";
 import { ScrollProgressBar } from "@/app/_components/scroll-progress";
 import Breadcrumb from "@/app/_components/breadcrumbs";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 async function fetchArticle(id: string, jwtToken: string) {
   const headersList = {
@@ -32,95 +34,120 @@ async function fetchArticle(id: string, jwtToken: string) {
 
 function SkeletonLoader() {
   return (
-    <Card
-      variant="static"
-      className="bg-background rounded-lg overflow-hidden shadow-md animate-pulse"
-    >
-      <CardHeader>
-        <div className="h-8 bg-gray-300 rounded w-1/2 mb-4"></div>
-        <div className="h-4 bg-gray-300 rounded w-1/4 mb-2"></div>
-        <div className="h-4 bg-gray-300 rounded w-1/3"></div>
-      </CardHeader>
-      <CardContent>
-        <div className="h-4 bg-gray-300 rounded w-full mb-2"></div>
-        <div className="h-4 bg-gray-300 rounded w-full mb-2"></div>
-        <div className="h-4 bg-gray-300 rounded w-3/4"></div>
-        <div className="h-4 bg-gray-300 rounded w-full mb-2"></div>
-        <div className="h-4 bg-gray-300 rounded w-full mb-2"></div>
-        <div className="h-4 bg-gray-300 rounded w-3/4"></div>
-        <div className="h-4 bg-gray-300 rounded w-full mb-2"></div>
-        <div className="h-4 bg-gray-300 rounded w-full mb-2"></div>
-        <div className="h-4 bg-gray-300 rounded w-3/4"></div>
-        <div className="h-4 bg-gray-300 rounded w-full mb-2"></div>
-        <div className="h-4 bg-gray-300 rounded w-full mb-2"></div>
-        <div className="h-4 bg-gray-300 rounded w-3/4"></div>
-        <div className="h-4 bg-gray-300 rounded w-full mb-2"></div>
-        <div className="h-4 bg-gray-300 rounded w-full mb-2"></div>
-        <div className="h-4 bg-gray-300 rounded w-3/4"></div>
-        <div className="h-4 bg-gray-300 rounded w-full mb-2"></div>
-        <div className="h-4 bg-gray-300 rounded w-full mb-2"></div>
-        <div className="h-4 bg-gray-300 rounded w-3/4"></div>
-        <div className="h-4 bg-gray-300 rounded w-full mb-2"></div>
-        <div className="h-4 bg-gray-300 rounded w-full mb-2"></div>
-        <div className="h-4 bg-gray-300 rounded w-3/4"></div>
-      </CardContent>
-    </Card>
+    <div className="max-w-4xl mx-auto">
+      <div className="h-6 w-32 bg-gray-200 dark:bg-white/5 rounded-full mb-8 animate-pulse" />
+      <Card
+        variant="static"
+        className="bg-white/80 dark:bg-black/40 backdrop-blur-xl rounded-[2.5rem] border border-gray-200 dark:border-white/10 shadow-2xl overflow-hidden"
+      >
+        <CardHeader className="p-8 md:p-12 pb-4">
+          <div className="h-12 bg-gray-200 dark:bg-white/5 rounded-2xl w-3/4 mb-8 animate-pulse" />
+          <div className="flex gap-4">
+            <div className="h-10 w-32 bg-gray-200 dark:bg-white/5 rounded-full animate-pulse" />
+            <div className="h-10 w-32 bg-gray-200 dark:bg-white/5 rounded-full animate-pulse" />
+          </div>
+        </CardHeader>
+        <CardContent className="p-8 md:p-12 pt-0">
+          <div className="space-y-4">
+            <div className="h-4 bg-gray-200 dark:bg-white/5 rounded w-full animate-pulse" />
+            <div className="h-4 bg-gray-200 dark:bg-white/5 rounded w-full animate-pulse" />
+            <div className="h-4 bg-gray-200 dark:bg-white/5 rounded w-5/6 animate-pulse" />
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 }
 
 async function ArticleContent({ id, session }: any) {
   const article = await fetchArticle(id, session.user.jwtToken);
 
+  // Calculate reading time
+  const wordsPerMinute = 240;
+  const words = article.content.trim().split(/\s+/).length;
+  const readingTime = Math.ceil(words / wordsPerMinute);
+
   return (
-    <div className="animate-slide-up">
-      <Card
-        variant="static"
-        className="bg-white/80 dark:bg-black/40 backdrop-blur-xl rounded-[2.5rem] border border-gray-200 dark:border-white/10 shadow-2xl overflow-hidden"
-      >
-        <CardHeader className="p-8 pb-2">
-          <div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-primary drop-shadow-sm leading-tight">
-              {article.title}
-            </h1>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-6 mt-6">
-            <div className="flex items-center gap-3 bg-primary/10 px-4 py-2 rounded-full border border-primary/20">
-              <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-black text-xs">
-                {article?.author.name?.charAt(0)}
-              </div>
-              <span className="text-sm font-bold tracking-wide uppercase">
-                {article?.author.name}
-              </span>
-            </div>
-
-            <div className="flex items-center gap-2 text-sm text-muted-foreground font-medium bg-black/5 dark:bg-white/5 px-4 py-2 rounded-full">
-              <ClockIcon className="w-4 h-4 text-primary" />
-              <span>
-                {formatDistanceToNowStrict(new Date(article.createdAt), {
-                  addSuffix: true,
-                })}
-              </span>
-            </div>
-          </div>
-
-          {article.author.email === session?.user.email && (
-            <div className="flex gap-2 bg-black/5 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/5 shadow-sm w-fit mt-4">
-              <EditDialog article={article} id={id} session={session} />
-              <DeleteButton session={session} id={id} />
-            </div>
-          )}
-        </CardHeader>
-
-        <div className="px-8 md:px-12 my-2">
-          <div className="h-px bg-gradient-to-r from-transparent via-gray-200 dark:via-white/10 to-transparent" />
+    <div className="animate-slide-up max-w-4xl mx-auto mb-16">
+      <div className="flex items-center justify-between mb-8 px-2 group">
+        <div className="flex items-center gap-4">
+          <Breadcrumb />
         </div>
 
-        <CardContent className="p-8 md:p-12 pt-0">
-          <p className="whitespace-pre-wrap text-lg md:text-xl leading-relaxed font-medium opacity-90 first-letter:text-5xl first-letter:font-black first-letter:mr-3 first-letter:float-left first-letter:text-primary">
-            {article.content}
-          </p>
-        </CardContent>
+        {article.author.email === session?.user.email && (
+          <div className="flex bg-white/50 dark:bg-white/5 backdrop-blur-md rounded-2xl border border-gray-200 dark:border-white/10 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md">
+            <EditDialog article={article} id={id} session={session} />
+            <div className="w-[1px] bg-gray-200 dark:bg-white/10 self-stretch my-2" />
+            <DeleteButton session={session} id={id} />
+          </div>
+        )}
+      </div>
+
+      <Card
+        variant="static"
+        className="bg-white/80 dark:bg-black/40 backdrop-blur-xl rounded-[2.5rem] border border-gray-200 dark:border-white/10 shadow-2xl overflow-hidden transition-all duration-500 hover:shadow-primary/5"
+      >
+        <div className="relative">
+          <CardHeader className="p-8 md:p-12 pb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-black text-foreground tracking-tight leading-[1.1] mb-8">
+              {article.title}
+            </h1>
+
+            <div className="flex flex-wrap items-center gap-4 sm:gap-8">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-primary flex items-center justify-center text-primary-foreground font-black text-xl shadow-lg shadow-primary/20 transition-transform hover:scale-105 active:scale-95">
+                  {article?.author.name?.charAt(0)}
+                </div>
+                <div>
+                  <p className="text-xs font-black uppercase tracking-wider text-muted-foreground mb-0.5">
+                    Author
+                  </p>
+                  <p className="font-bold text-base leading-none">
+                    {article?.author.name}
+                  </p>
+                </div>
+              </div>
+
+              <div className="h-8 w-px bg-gray-200 dark:bg-white/10 hidden sm:block" />
+
+              <div className="flex items-center gap-6">
+                <div className="flex flex-col gap-0.5">
+                  <p className="text-xs font-black uppercase tracking-wider text-muted-foreground">
+                    Published
+                  </p>
+                  <div className="flex items-center gap-1.5 text-sm font-semibold">
+                    <ClockIcon className="w-4 h-4 text-primary" />
+                    <span>
+                      {formatDistanceToNowStrict(new Date(article.createdAt), {
+                        addSuffix: true,
+                      })}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-0.5">
+                  <p className="text-xs font-black uppercase tracking-wider text-muted-foreground">
+                    Reading Time
+                  </p>
+                  <div className="flex items-center gap-1.5 text-sm font-semibold text-primary">
+                    <BookOpenIcon className="w-4 h-4" />
+                    <span>{readingTime} min read</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardHeader>
+
+          <div className="px-8 md:px-12">
+            <div className="h-px bg-gradient-to-r from-transparent via-gray-200 dark:via-white/10 to-transparent" />
+          </div>
+
+          <CardContent className="p-8 md:p-12 pt-8">
+            <p className="whitespace-pre-wrap text-lg md:text-xl leading-relaxed font-medium text-foreground/80 first-letter:text-7xl first-letter:font-black first-letter:mr-3 first-letter:float-left first-letter:text-primary selection:bg-primary/20">
+              {article.content}
+            </p>
+          </CardContent>
+        </div>
       </Card>
     </div>
   );
@@ -138,13 +165,12 @@ export default async function Page({ params }: { params: { id: string } }) {
   return (
     <>
       <ScrollProgressBar />
-      <div className=" mx-auto px-4 py-4">
-        {/* <BackButton /> */}
-        {/* <Breadcrumb /> */}
-
-        <Suspense fallback={<SkeletonLoader />}>
-          <ArticleContent id={id} session={session} />
-        </Suspense>
+      <div className="min-h-screen bg-gray-50/50 dark:bg-[#050505] pt-12">
+        <div className="container mx-auto px-4">
+          <Suspense fallback={<SkeletonLoader />}>
+            <ArticleContent id={id} session={session} />
+          </Suspense>
+        </div>
       </div>
     </>
   );

@@ -81,7 +81,7 @@ export function EditDialog({ article, id, session }: any) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="ghost" size="icon">
-          <Pencil className="h-4 w-4" />
+          <Pencil className="h-3 w-3" />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]  lg:min-w-[920px] ">
