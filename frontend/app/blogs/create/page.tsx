@@ -14,6 +14,7 @@ const Page = () => {
   const { toast } = useToast();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [published, setPublished] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,7 +43,7 @@ const Page = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ title, content }),
+        body: JSON.stringify({ title, content, published }),
       });
       if (response.ok) {
         setTitle("");
@@ -114,7 +115,22 @@ const Page = () => {
                     onChange={handleContentChange}
                   />
                 </div>
+
+                <div className="flex items-center space-x-3 p-4 bg-primary/5 rounded-2xl border border-primary/10">
+                  <input 
+                    type="checkbox" 
+                    id="published" 
+                    checked={published}
+                    onChange={(e) => setPublished(e.target.checked)}
+                    className="w-5 h-5 accent-primary cursor-pointer"
+                  />
+                  <Label htmlFor="published" className="text-lg font-bold cursor-pointer">
+                    Publish this story immediately
+                  </Label>
+                </div>
+
                 <div className="pt-4 flex justify-center">
+
                   <LoaderButton
                     type="submit"
                     isLoading={isLoading}

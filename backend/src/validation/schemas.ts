@@ -14,9 +14,12 @@ export const signinSchema = z.object({
 export const createArticleSchema = z.object({
   title: z.string().min(1),
   content: z.string().min(1),
+  published: z.boolean().optional(),
 });
 
 export const updateArticleSchema = z.object({
   title: z.string().min(1).optional(),
   content: z.string().min(1).optional(),
+  published: z.boolean().optional(),
 });
+

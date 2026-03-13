@@ -19,12 +19,20 @@ const createPrismaClient = (connectionString: string) => {
 // Public Routes
 articleRouter.get("/latest", async (c) => {
   const prisma = createPrismaClient(c.env.DATABASE_URL);
+  const page = parseInt(c.req.query("p") || "1");
+  const limit = parseInt(c.req.query("l") || "6");
+  const skip = (page - 1) * limit;
+
   try {
     const latestPosts = await prisma.post.findMany({
+      where: {
+        published: true,
+      },
       orderBy: {
         createdAt: "desc",
       },
-      take: 6,
+      skip: skip,
+      take: limit,
       include: {
         author: {
           select: {
@@ -33,7 +41,17 @@ articleRouter.get("/latest", async (c) => {
         },
       },
     });
-    return c.json({ posts: latestPosts, number_of_posts: latestPosts.length });
+
+    const totalPosts = await prisma.post.count({
+      where: { published: true }
+    });
+
+    return c.json({ 
+      posts: latestPosts, 
+      number_of_posts: latestPosts.length,
+      total_posts: totalPosts,
+      has_more: skip + latestPosts.length < totalPosts
+    });
   } catch (e) {
     c.status(411);
     return c.json({ err: e });
@@ -44,10 +62,43 @@ articleRouter.get("/details/:id", async (c) => {
   const prisma = createPrismaClient(c.env.DATABASE_URL);
   try {
     const id = c.req.param("id");
-    const post = await prisma.post.findFirst({
-      where: {
-        id: id,
-      },
+
+    // Optional: Get userId for previewing drafts
+    let userId: string | undefined;
+    const authHeader = c.req.header("Authorization") || "";
+    if (authHeader && authHeader.startsWith("Bearer ")) {
+      const token = authHeader.split(" ")[1];
+      try {
+        const isUserVerified = await verify(token, c.env.JWT_SECRET, "HS256");
+        userId = isUserVerified.id as string;
+      } catch (e) {
+        // Token invalid, continue as guest
+      }
+    }
+
+    // First check if article exists at all
+    const basePost = await prisma.post.findUnique({
+      where: { id },
+      select: { published: true, authorId: true }
+    });
+
+    if (!basePost) {
+      c.status(404);
+      return c.json({ err: "Article not found" });
+    }
+
+    // Handle accessibility
+    const isAuthor = userId === basePost.authorId;
+    if (!basePost.published && !isAuthor) {
+      c.status(403);
+      return c.json({ 
+        err: "This is a private blog", 
+        isPrivate: true 
+      });
+    }
+
+    const post = await prisma.post.findUnique({
+      where: { id },
       include: {
         author: {
           select: {
@@ -57,13 +108,65 @@ articleRouter.get("/details/:id", async (c) => {
         },
       },
     });
-    if (!post) {
-      return c.json({ err: "No article found with this id" });
-    }
+
     return c.json({ article: post });
   } catch (e) {
     c.status(411);
     return c.json({ err: e });
+  }
+});
+
+
+
+articleRouter.get("/search", async (c) => {
+  const prisma = createPrismaClient(c.env.DATABASE_URL);
+  const query = c.req.query("q") || "";
+  const page = parseInt(c.req.query("p") || "1");
+  const limit = parseInt(c.req.query("l") || "6");
+  const skip = (page - 1) * limit;
+
+  try {
+    const posts = await prisma.post.findMany({
+      where: {
+        published: true,
+        OR: [
+          { title: { contains: query, mode: "insensitive" } },
+          { content: { contains: query, mode: "insensitive" } },
+        ],
+      },
+      include: {
+        author: {
+          select: {
+            name: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      skip: skip,
+      take: limit,
+    });
+
+    const totalPosts = await prisma.post.count({
+      where: {
+        published: true,
+        OR: [
+          { title: { contains: query, mode: "insensitive" } },
+          { content: { contains: query, mode: "insensitive" } },
+        ],
+      },
+    });
+
+    return c.json({ 
+      posts, 
+      number_of_posts: posts.length,
+      total_posts: totalPosts,
+      has_more: skip + posts.length < totalPosts
+    });
+  } catch (e) {
+    c.status(500);
+    return c.json({ err: "Search failed" });
   }
 });
 
@@ -100,6 +203,7 @@ articleRouter.post("/", zValidator("json", createArticleSchema), async (c) => {
       data: {
         title: body.title,
         content: body.content,
+        published: body.published ?? false,
         authorId: authorId,
       },
     });
@@ -141,6 +245,7 @@ articleRouter.put("/:id", zValidator("json", updateArticleSchema), async (c) => 
       data: {
         title: body.title,
         content: body.content,
+        published: body.published,
       },
     });
     return c.json({ edited: post });
@@ -149,6 +254,7 @@ articleRouter.put("/:id", zValidator("json", updateArticleSchema), async (c) => 
     return c.json({ err: e });
   }
 });
+
 
 articleRouter.delete("/:id", async (c) => {
   const userId = c.get("userId");
@@ -186,6 +292,10 @@ articleRouter.delete("/:id", async (c) => {
 
 articleRouter.get("/all", async (c) => {
   const prisma = createPrismaClient(c.env.DATABASE_URL);
+  const page = parseInt(c.req.query("p") || "1");
+  const limit = parseInt(c.req.query("l") || "6");
+  const skip = (page - 1) * limit;
+
   try {
     const authorId = c.get("userId");
     const posts = await prisma.post.findMany({
@@ -199,8 +309,23 @@ articleRouter.get("/all", async (c) => {
           },
         },
       },
+      orderBy: {
+        createdAt: "desc",
+      },
+      skip: skip,
+      take: limit,
     });
-    return c.json({ posts: posts, number_of_posts: posts.length });
+
+    const totalPosts = await prisma.post.count({
+      where: { authorId: authorId }
+    });
+
+    return c.json({ 
+      posts: posts, 
+      number_of_posts: posts.length,
+      total_posts: totalPosts,
+      has_more: skip + posts.length < totalPosts
+    });
   } catch (e) {
     c.status(411);
     return c.json({ err: e });

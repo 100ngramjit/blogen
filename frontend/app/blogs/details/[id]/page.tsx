@@ -6,12 +6,14 @@ import { getServerSession } from "next-auth";
 import { signOut } from "next-auth/react";
 import { EditDialog } from "@/app/_components/edit-dialog";
 import { DeleteButton } from "@/app/_components/delete-button";
+import { ShareButton } from "@/app/_components/share-button";
 import { ClockIcon, UserIcon, BookOpenIcon, ArrowLeftIcon } from "lucide-react";
 import { formatDistanceToNowStrict } from "date-fns";
 import { ScrollProgressBar } from "@/app/_components/scroll-progress";
 import Breadcrumb from "@/app/_components/breadcrumbs";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+
 
 async function fetchArticle(id: string, jwtToken?: string) {
   const headersList: any = {
@@ -63,18 +65,50 @@ function SkeletonLoader() {
 }
 
 async function ArticleContent({ id, session }: any) {
-  const article = await fetchArticle(id, session?.user?.jwtToken);
+  let article = null;
+  let error: any = null;
 
-  if (!article) {
+  try {
+    article = await fetchArticle(id, session?.user?.jwtToken);
+  } catch (e: any) {
+    error = e.response?.data;
+  }
+
+  if (error && error.isPrivate) {
     return (
-      <div className="flex flex-col items-center justify-center p-20 text-center">
-        <h2 className="text-2xl font-bold mb-4">Article Not Found</h2>
+      <div className="flex flex-col items-center justify-center p-20 text-center animate-fade-in">
+        <div className="w-20 h-20 rounded-3xl bg-yellow-500/10 flex items-center justify-center text-yellow-600 mb-6 border border-yellow-500/20">
+          <BookOpenIcon className="h-10 w-10 opacity-50" />
+        </div>
+        <h2 className="text-3xl font-black mb-2 tracking-tight">Access Restricted</h2>
+        <p className="text-muted-foreground max-w-sm mb-8 font-medium">
+          This article is currently marked as a draft or private by the author.
+        </p>
         <Link href="/blogs">
-          <Button variant="outline">Back to Blogs</Button>
+          <Button className="rounded-xl font-bold px-8" size="lg">
+            Back to Feed
+          </Button>
         </Link>
       </div>
     );
   }
+
+  if (!article) {
+    return (
+      <div className="flex flex-col items-center justify-center p-20 text-center animate-fade-in">
+        <h2 className="text-3xl font-black mb-2 tracking-tight">Article Not Found</h2>
+        <p className="text-muted-foreground mb-8 font-medium">
+          We couldn&apos;t find the story you&apos;re looking for.
+        </p>
+        <Link href="/blogs">
+          <Button variant="outline" className="rounded-xl font-bold px-8" size="lg">
+            Back to Feed
+          </Button>
+        </Link>
+      </div>
+    );
+  }
+
 
   // Calculate reading time
   const wordsPerMinute = 240;
@@ -88,14 +122,19 @@ async function ArticleContent({ id, session }: any) {
           <Breadcrumb />
         </div>
 
-        {session && article.author.email === session?.user.email && (
-          <div className="flex bg-white/50 dark:bg-white/5 backdrop-blur-md rounded-2xl border border-gray-200 dark:border-white/10 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md">
-            <EditDialog article={article} id={id} session={session} />
-            <div className="w-[1px] bg-gray-200 dark:bg-white/10 self-stretch my-2" />
-            <DeleteButton session={session} id={id} />
-          </div>
-        )}
+        <div className="flex bg-white/50 dark:bg-white/5 backdrop-blur-md rounded-2xl border border-gray-200 dark:border-white/10 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md">
+          <ShareButton title={article.title} />
+          {session && article.author.email === session?.user.email && (
+            <>
+              <div className="w-[1px] bg-gray-200 dark:bg-white/10 self-stretch my-2" />
+              <EditDialog article={article} id={id} session={session} />
+              <div className="w-[1px] bg-gray-200 dark:bg-white/10 self-stretch my-2" />
+              <DeleteButton session={session} id={id} />
+            </>
+          )}
+        </div>
       </div>
+
 
       <Card
         variant="static"

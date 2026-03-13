@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 import { NEXT_AUTH_CONFIG } from "../../lib/authconfig";
-import BlogCards from "../_components/blog-cards";
+import BlogFeed from "../_components/blog-feed";
 
 const Page = async () => {
   const session = await getServerSession(NEXT_AUTH_CONFIG);
@@ -18,11 +18,11 @@ const Page = async () => {
           The latest blogs according to your interests. Explore perspectives, shared insights, and creative deep dives.
         </p>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        <BlogCards session={session} blogtype="latest" />
-      </div>
+      
+      <BlogFeed session={session} />
     </div>
   );
 };
+
 
 export default Page;
