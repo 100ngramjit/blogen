@@ -5,6 +5,8 @@ import { Hono } from "hono";
 import { sign } from "hono/jwt";
 import { envVars } from "../types";
 import bcrypt from "bcryptjs";
+import { zValidator } from "@hono/zod-validator";
+import { signinSchema, signupSchema } from "../validation/schemas";
 
 export const userRouter = new Hono<envVars>();
 
@@ -16,10 +18,10 @@ const createPrismaClient = (connectionString: string) => {
   }).$extends(withAccelerate());
 };
 
-userRouter.post("/signup", async (c) => {
+userRouter.post("/signup", zValidator("json", signupSchema), async (c) => {
   const prisma = createPrismaClient(c.env.DATABASE_URL);
   try {
-    const body = await c.req.json();
+    const body = c.req.valid("json");
     // Hash the password before storing it
     const hashedPassword = await bcrypt.hash(body.password, 10);
 
@@ -45,11 +47,10 @@ userRouter.post("/signup", async (c) => {
   }
 });
 
-userRouter.post("/signin", async (c) => {
+userRouter.post("/signin", zValidator("json", signinSchema), async (c) => {
   const prisma = createPrismaClient(c.env.DATABASE_URL);
-  const body = await c.req.json();
+  const body = c.req.valid("json");
   try {
-    console.log({ email: body.email });
     const user = await prisma.user.findUnique({
       where: {
         email: body.email,
@@ -78,3 +79,4 @@ userRouter.post("/signin", async (c) => {
     return c.json({ err: e, message: e?.message });
   }
 });
+

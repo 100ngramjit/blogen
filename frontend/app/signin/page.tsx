@@ -34,18 +34,21 @@ export default function Page() {
         router.push("/blogs");
       } else {
         toast({
-          title: "Error!",
-          description: JSON.stringify(response),
+          title: "Signin Failed",
+          description: "Invalid email or password. Please try again.",
           variant: "destructive",
         });
         setIsLoading(false);
       }
     } catch (e) {
       toast({
-        title: JSON.stringify(e),
+        title: "Signin Error",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
       });
       setIsLoading(false);
     }
   }
+
   return <SignInForm handleSubmit={handleSubmit} isLoading={isLoading} />;
 }

@@ -50,13 +50,15 @@ export function DeleteButton({ session, id }: any) {
     } catch (e: any) {
       setIsLoading(false);
 
+      const errorMessage = e?.response?.data?.err || e?.response?.data?.message || "Failed to delete blog";
       toast({
         title: "Error!",
-        description: e?.response.data.Error,
+        description: errorMessage,
         variant: "destructive",
       });
     }
   };
+
 
   return (
     <AlertDialog>

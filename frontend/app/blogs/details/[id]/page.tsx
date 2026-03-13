@@ -13,13 +13,16 @@ import Breadcrumb from "@/app/_components/breadcrumbs";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-async function fetchArticle(id: string, jwtToken: string) {
-  const headersList = {
+async function fetchArticle(id: string, jwtToken?: string) {
+  const headersList: any = {
     accept: "application/json",
     "accept-language": "en-GB,en-US;q=0.9,en;q=0.8",
-    Authorization: `Bearer ${jwtToken}`,
     "Content-Type": "application/json",
   };
+
+  if (jwtToken) {
+    headersList["Authorization"] = `Bearer ${jwtToken}`;
+  }
 
   const reqOptions = {
     url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/article/details/${id}`,
@@ -60,7 +63,18 @@ function SkeletonLoader() {
 }
 
 async function ArticleContent({ id, session }: any) {
-  const article = await fetchArticle(id, session.user.jwtToken);
+  const article = await fetchArticle(id, session?.user?.jwtToken);
+
+  if (!article) {
+    return (
+      <div className="flex flex-col items-center justify-center p-20 text-center">
+        <h2 className="text-2xl font-bold mb-4">Article Not Found</h2>
+        <Link href="/blogs">
+          <Button variant="outline">Back to Blogs</Button>
+        </Link>
+      </div>
+    );
+  }
 
   // Calculate reading time
   const wordsPerMinute = 240;
@@ -74,7 +88,7 @@ async function ArticleContent({ id, session }: any) {
           <Breadcrumb />
         </div>
 
-        {article.author.email === session?.user.email && (
+        {session && article.author.email === session?.user.email && (
           <div className="flex bg-white/50 dark:bg-white/5 backdrop-blur-md rounded-2xl border border-gray-200 dark:border-white/10 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md">
             <EditDialog article={article} id={id} session={session} />
             <div className="w-[1px] bg-gray-200 dark:bg-white/10 self-stretch my-2" />
@@ -157,11 +171,6 @@ export default async function Page({ params }: { params: { id: string } }) {
   const { id } = params;
   const session = await getServerSession(NEXT_AUTH_CONFIG);
 
-  if (!session) {
-    await signOut({ callbackUrl: "/" });
-    return null;
-  }
-
   return (
     <>
       <ScrollProgressBar />
@@ -175,3 +184,4 @@ export default async function Page({ params }: { params: { id: string } }) {
     </>
   );
 }
+

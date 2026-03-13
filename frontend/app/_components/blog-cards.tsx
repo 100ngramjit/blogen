@@ -34,22 +34,25 @@ function CardSkeleton() {
 }
 const BlogCards = ({ session, blogtype }: any) => {
   const router = useRouter();
-  const token = session.user.jwtToken;
-  const name = session.user.name;
+  const token = session?.user?.jwtToken;
+  const name = session?.user?.name;
 
   const [blogs, setBlogs] = useState({ number_of_posts: null, posts: [] });
   const [isLoading, setIsLoading] = useState(false);
 
-  const getBlogs = async (token: string) => {
+  const getBlogs = async (token?: string) => {
     try {
       setIsLoading(true);
-      let headersList = {
+      let headersList: any = {
         accept:
           "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
         "accept-language": "en-GB,en-US;q=0.9,en;q=0.8",
-        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       };
+
+      if (token) {
+        headersList["Authorization"] = `Bearer ${token}`;
+      }
 
       let reqOptions = {
         url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/article/${blogtype}`,
@@ -69,6 +72,7 @@ const BlogCards = ({ session, blogtype }: any) => {
   useEffect(() => {
     getBlogs(token);
   }, []);
+
 
   if (blogs?.number_of_posts === 0) {
     return (

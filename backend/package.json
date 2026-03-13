@@ -5,13 +5,15 @@
     "deploy": "wrangler deploy --minify src/index.ts"
   },
   "dependencies": {
+    "@hono/zod-validator": "^0.7.6",
     "@prisma/adapter-pg": "^7.4.2",
     "@prisma/extension-accelerate": "^3.0.1",
     "@types/bcryptjs": "^2.4.6",
     "bcryptjs": "^2.4.3",
     "hono": "^4.4.7",
     "pg": "^8.11.0",
-    "postgres": "^3.4.8"
+    "postgres": "^3.4.8",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240529.0",

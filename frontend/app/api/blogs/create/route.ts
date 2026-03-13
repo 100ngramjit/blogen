@@ -33,7 +33,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       res: response.data,
     });
-  } catch (error) {
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      console.error("Backend API Error:", error.response?.data);
+      return NextResponse.json(
+        error.response?.data || { error: "Failed to communicate with backend" },
+        { status: error.response?.status || 500 }
+      );
+    }
     console.error("Error during API request:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
@@ -41,3 +48,4 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+

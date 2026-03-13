@@ -69,13 +69,15 @@ export function EditDialog({ article, id, session }: any) {
     } catch (e: any) {
       setIsLoading(false);
 
+      const errorMessage = e?.response?.data?.err || e?.response?.data?.message || "Failed to update blog";
       toast({
         title: "Error!",
-        description: e?.response.data.Error,
+        description: errorMessage,
         variant: "destructive",
       });
     }
   };
+
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

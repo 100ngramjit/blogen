@@ -52,26 +52,31 @@ export default function Page() {
       } else {
         toast({
           title: "Error!",
-          description: JSON.stringify(response.data),
+          description: response.data.err || response.data.message || "Signup failed",
           variant: "destructive",
         });
         setIsLoading(false);
       }
     } catch (e: any) {
-      if (e.response.data.err.code === "P2002") {
-        setIsLoading(false);
-
+      setIsLoading(false);
+      const backendErr = e.response?.data?.err;
+      
+      if (backendErr?.code === "P2002") {
         return toast({
           title: "Email already exists",
-          description: "use a different email to signup",
+          description: "Use a different email to signup",
           variant: "destructive",
         });
       }
+
       toast({
-        title: JSON.stringify(e),
+        title: "Signup Error",
+        description: e.response?.data?.message || "Something went wrong. Please try again.",
+        variant: "destructive",
       });
     }
   }
+
 
   return <RegisterForm handleSubmit={handleSubmit} isLoading={isLoading} />;
 }

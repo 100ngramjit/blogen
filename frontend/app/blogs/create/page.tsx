@@ -53,14 +53,16 @@ const Page = () => {
         setIsLoading(false);
         router.push("/blogs");
       } else {
+        const errorData = await response.json();
         toast({
-          title: "Server error! Please try again",
+          title: "Error",
+          description: errorData.err || errorData.message || "Failed to create blog post",
           variant: "destructive",
         });
-        console.error("Failed to create blog post");
         setIsLoading(false);
       }
     } catch (error) {
+
       toast({
         title: "Server error! Please try again",
         variant: "destructive",
